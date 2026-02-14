@@ -7,7 +7,7 @@
 BOOST_AUTO_TEST_SUITE(CardTest)
 
 /**
- * @test Sprawdza konstruktor karty Standard
+ * @test Checks Standard card constructor
  */
 BOOST_AUTO_TEST_CASE(StandardCardTest) {
     std::shared_ptr<Card> card = std::make_shared<StandardCard>();
@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_CASE(StandardCardTest) {
 }
 
 /**
- * @test Sprawdza konstruktor karty Gold
+ * @test Checks Gold card constructor
  */
 BOOST_AUTO_TEST_CASE(GoldCardTest) {
     std::shared_ptr<Card> card = std::make_shared<GoldCard>();
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(GoldCardTest) {
 }
 
 /**
- * @test Sprawdza konstruktor karty Diamond
+ * @test Checks Diamond card constructor
  */
 BOOST_AUTO_TEST_CASE(DiamondCardTest) {
     std::shared_ptr<Card> card = std::make_shared<DiamondCard>();

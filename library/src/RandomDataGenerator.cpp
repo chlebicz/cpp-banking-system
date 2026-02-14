@@ -8,12 +8,12 @@ std::string RandomDataGenerator::generateIBAN() {
 
     std::string bban = bankId + generateStringWithDigits(16);
 
-    // Numer konta z przeniesionymi 4 pierwszymi znakami na koniec,
-    // a następnie zamienionymi znakami na odpowiednie ciągi cyfr,
+    // Account number with the first 4 characters moved to the end,
+    // and then characters replaced with corresponding digit sequences,
     // A -> "10", B -> "11", ... PL -> "2521"
     std::string ibanShifted = bban + "252100";
 
-    // zoptymalizowane modulo int(ibanShifted) % 97
+    // optimized modulo int(ibanShifted) % 97
     int mod = 0;
     for (char c : ibanShifted) {
         int currentNum = c - '0';
@@ -44,4 +44,3 @@ std::string RandomDataGenerator::generateStringWithDigits(unsigned int length) {
 
     return result.str();
 }
-

@@ -13,7 +13,7 @@ json Card::toJSON() const {
 std::shared_ptr<Card> Card::fromJSON(const json& source) {
     unsigned int typeInt = std::stoi(source["type"].get<std::string>());
     if (typeInt > 2)
-        throw std::invalid_argument("Niepoprawny typ karty");
+        throw std::invalid_argument("Invalid card type");
 
     auto type = static_cast<CardType>(typeInt);
     switch (type) {
@@ -25,5 +25,5 @@ std::shared_ptr<Card> Card::fromJSON(const json& source) {
             return std::make_shared<DiamondCard>();
     }
 
-    throw std::runtime_error("Cos poszlo nie tak...");
+    throw std::runtime_error("Something went wrong...");
 }

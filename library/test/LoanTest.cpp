@@ -11,7 +11,7 @@ namespace gr = boost::gregorian;
 BOOST_AUTO_TEST_SUITE(LoanTest)
 
 /**
- * @test Sprawdza poprawność konstruktora kredytu
+ * @test Checks correctness of loan constructor
  */
 BOOST_AUTO_TEST_CASE(LoanConstructorTest) {
     std::shared_ptr<Account> account = std::make_shared<MainAccount>("5", "55");
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(LoanConstructorTest) {
 }
 
 /**
- * @test Sprawdza poprawne obliczanie pozostałych miesięcy kredytu
+ * @test Checks correct calculation of remaining loan months
  */
 BOOST_AUTO_TEST_CASE(LoanRemainingMonthsTest) {
     std::shared_ptr<Account> account = std::make_shared<MainAccount>("5", "55");
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(LoanRemainingMonthsTest) {
 }
 
 /**
- * @test Sprawdza poprawne branie rat kredytu
+ * @test Checks correct taking of loan installments
  */
 BOOST_AUTO_TEST_CASE(LoanTakeMoneyTest) {
     std::shared_ptr<Account> account = std::make_shared<MainAccount>("5", "55");

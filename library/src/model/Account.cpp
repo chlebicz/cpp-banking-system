@@ -91,7 +91,7 @@ bool Account::transaction(
         try {
             setBalance(getBalance() - totalAmount);
         } catch (InvalidAmountError) {
-            // throw NotEnoughMoney{"Za malo pieniedzy by wykonac transakcje"};
+            // throw NotEnoughMoney{"Not enough money to perform transaction"};
             return false;
         }
         Bank::getInstance().increaseBalance(fee);
@@ -102,7 +102,7 @@ bool Account::transaction(
 
 std::string Account::toString() const {
     std::stringstream ss;
-    ss << " Numer konta: " << accountNumber << " Stan konta: " << balance;
+    ss << " Account number: " << accountNumber << " Balance: " << balance;
     return ss.str();
 }
 
@@ -132,7 +132,7 @@ std::shared_ptr<Account> Account::fromJSON(const json& source) {
             return SavingsAccount::fromJSON(source);
     }
 
-    throw std::logic_error("Cos poszlo nie tak..");
+    throw std::logic_error("Something went wrong..");
 }
 
 Amount Account::getFee() {

@@ -9,7 +9,7 @@ namespace gr = boost::gregorian;
 BOOST_AUTO_TEST_SUITE(ClientTest)
 
 /**
- * @test Sprawdza poprawność konstruktora klienta (m.in. kolejność parametrów)
+ * @test Checks correctness of client constructor (e.g. parameter order)
  */
 BOOST_AUTO_TEST_CASE(ClientConstructorTest) {
     std::shared_ptr<Client> client = std::make_shared<Client>("John", "Doe", "5", "123", "123");
@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE(ClientConstructorTest) {
 }
 
 /**
- * @test Sprawdza działanie setterów w kliencie
+ * @test Checks functionality of setters in client
  */
 BOOST_AUTO_TEST_CASE(ClientSetterTest) {
     std::shared_ptr<Client> client = std::make_shared<Client>("John", "Doe", "5", "123", "123");
@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(ClientSetterTest) {
 }
 
 /**
- * @test Sprawdza branie kredytu
+ * @test Checks taking a loan
  */
 BOOST_AUTO_TEST_CASE(ClientLoansTest) {
     std::shared_ptr<Client> client = std::make_shared<Client>("John", "Doe", "5", "123", "123");

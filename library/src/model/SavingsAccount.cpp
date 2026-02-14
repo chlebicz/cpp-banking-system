@@ -1,6 +1,6 @@
 #include "model/SavingsAccount.h"
 
-/// Konstruktor
+/// Constructor
 SavingsAccount::SavingsAccount(
     const std::string& accountNumber, const std::string& id
 )
@@ -14,18 +14,18 @@ SavingsAccount::SavingsAccount(const json& source)
         deposit = Deposit::fromJSON(source["deposit"]);
 }
 
-/// Funkcja tworząca lokatę
-/// Przyjmuje 1 argument Amount
-/// Zwraca bool
+/// Function creating a deposit
+/// Accepts 1 argument Amount
+/// Returns bool
 bool SavingsAccount::createDeposit(
     Amount amount, const gr::date &beginTime
 ) {
-    // Przypadek kiedy lokata jest już utworzona
+    // Case where deposit is already created
     if (deposit != nullptr) {
         return false;
     }
 
-    // Przypadek kiedy nie ma wystarczająco środków by utworzyć lokatę
+    // Case where there are not enough funds to create a deposit
     Amount newBalance = getBalance();
     try {
         newBalance -= amount;
@@ -38,16 +38,16 @@ bool SavingsAccount::createDeposit(
     return true;
 }
 
-/// Funkcja zwracająca wskaźnik do obiektu lokaty
-/// Nie przyjmuje argumentów
+/// Function returning a pointer to the deposit object
+/// Accepts no arguments
 std::shared_ptr<Deposit> SavingsAccount::getDeposit() const {
     return deposit;
 }
 
-/// Funkcja zwracająca właściwości obiektu jako string
+/// Function returning object properties as a string
 std::string SavingsAccount::toString() const {
     std::ostringstream oss;
-    oss << "Konto oszczednosciowe " << Account::toString();
+    oss << "Savings Account " << Account::toString();
 
     if (deposit)
         oss << deposit->toString();
@@ -67,9 +67,9 @@ AccountType SavingsAccount::getType() const {
     return AccountType::Savings;
 }
 
-/// Funkcja kończąca lokatę
-/// Nie przyjmuje argumentów
-/// Nic nie zwraca
+/// Function ending the deposit
+/// Accepts no arguments
+/// Returns nothing
 void SavingsAccount::deleteDeposit() {
     if (deposit == nullptr) {
         return;
@@ -91,4 +91,3 @@ std::shared_ptr<Account> SavingsAccount::fromJSON(const json& source) {
 
     return std::make_shared<Helper>(source);
 }
-

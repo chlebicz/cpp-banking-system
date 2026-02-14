@@ -12,7 +12,7 @@ std::ostream& operator<<(std::ostream& os, TransferType type) {
 BOOST_AUTO_TEST_SUITE(TransferManagerTest)
 
 /**
- * @test Sprawdza poprawne tworzenie przelewów wewnętrznych
+ * @test Checks correct creation of internal transfers
  */
 BOOST_AUTO_TEST_CASE(CreateInternalTransferTest) {
     ClientManager clientManager;
@@ -44,8 +44,8 @@ BOOST_AUTO_TEST_CASE(CreateInternalTransferTest) {
 }
 
 /**
- * @test Sprawdza wyrzucanie wyjątku NotEnoughMoney kiedy nie ma środków
- *       na wykonanie przelewu
+ * @test Checks throwing NotEnoughMoney exception when there are not enough
+ *       funds to perform the transfer
  */
 BOOST_AUTO_TEST_CASE(CreateTransferNotEnoughMoneyTest) {
     ClientManager clientManager;
@@ -70,8 +70,8 @@ BOOST_AUTO_TEST_CASE(CreateTransferNotEnoughMoneyTest) {
 }
 
 /**
- * @test Sprawdza poprawne wykonywanie przelewów zewnętrznych (zapis do
- *       pliku do zaksięgowania)
+ * @test Checks correct execution of external transfers (saving to file
+ *       for booking)
  */
 BOOST_AUTO_TEST_CASE(CreateExternalTransferTest) {
     ClientManager clientManager;
@@ -111,8 +111,8 @@ BOOST_AUTO_TEST_CASE(CreateExternalTransferTest) {
 }
 
 /**
- * @test Sprawdza wyszukiwanie przelewów, które zostały wykonane przez/do
- *       klienta o podanym numerze PESEL
+ * @test Checks finding transfers that were made by/to a client with
+ *       the given PESEL number
  */
 BOOST_AUTO_TEST_CASE(FindUserTransfersTest) {
     ClientManager clientManager;
@@ -143,7 +143,7 @@ BOOST_AUTO_TEST_CASE(FindUserTransfersTest) {
 }
 
 /**
- * @test Sprawdza poprawne wyszukiwanie przelewów z/do podanego konta
+ * @test Checks correct finding of transfers from/to the given account
  */
 BOOST_AUTO_TEST_CASE(FindAccountTransfersTest) {
     ClientManager clientManager;
@@ -165,7 +165,7 @@ BOOST_AUTO_TEST_CASE(FindAccountTransfersTest) {
 }
 
 /**
- * @test Sprawdza, czy po zapisie przelewu można go odczytać
+ * @test Checks if after saving a transfer it can be read
  */
 BOOST_AUTO_TEST_CASE(TransferManSaveLoadTest) {
     std::string id;
@@ -202,7 +202,7 @@ BOOST_AUTO_TEST_CASE(TransferManSaveLoadTest) {
 }
 
 /**
- * @test Sprawdza obsługiwanie przychodzących przelewów zewnętrznych
+ * @test Checks handling of incoming external transfers
  */
 BOOST_AUTO_TEST_CASE(HandleIncomingExternalTransfersTest) {
     ClientManager clientManager;

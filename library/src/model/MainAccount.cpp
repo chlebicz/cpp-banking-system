@@ -1,6 +1,6 @@
 #include "model/MainAccount.h"
 
-/// Konstruktor
+/// Constructor
 MainAccount::MainAccount(const std::string &accountNumber, const std::string &id)
     : Account(accountNumber, id) {
 }
@@ -10,7 +10,7 @@ MainAccount::MainAccount(const json& source)
 {}
 
 std::string MainAccount::toString() const {
-    return "Konto glowne " + Account::toString();
+    return "Main Account " + Account::toString();
 }
 
 json MainAccount::toJSON() const {

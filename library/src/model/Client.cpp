@@ -48,9 +48,9 @@ bool Client::isPasswordCorrect(const std::string& password) const {
 
 std::string Client::toString() const {
     return "Login: " + login + ", "
-        + "Imię: " + name + ", " + "Nazwisko: " + lastName + ", "
-        + "Numer PESEL: " + personalId
-        + ".\nKredyty:\n" + loansInfo();
+        + "Name: " + name + ", " + "Last Name: " + lastName + ", "
+        + "PESEL: " + personalId
+        + ".\nLoans:\n" + loansInfo();
 }
 
 json Client::toJSON() const {
@@ -70,7 +70,7 @@ std::string Client::getId() const {
 }
 
 std::shared_ptr<Client> Client::fromJSON(const json& source) {
-    // obecnie ta metoda zakłada, że podany obiekt JSON ma poprawny format
+    // currently this method assumes that the given JSON object has a valid format
 
     std::vector<std::shared_ptr<Loan>> loans;
     loans.reserve(source["loans"].size());

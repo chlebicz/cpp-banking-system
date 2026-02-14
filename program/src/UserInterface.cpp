@@ -11,9 +11,9 @@ UserInterface::UserInterface() {
 }
 
 bool UserInterface::renderEntryView() {
-    std::cout << "Nacisnij r aby zarejestrowac konto" << std::endl;
-    std::cout << "Nacisnij l aby sie zalogowac" <<std::endl;
-    std::cout << "Nacisnij x aby wyjsc" << std::endl;
+    std::cout << "Press r to register an account" << std::endl;
+    std::cout << "Press l to login" <<std::endl;
+    std::cout << "Press x to exit" << std::endl;
     char press;
     bool val;
     std::cin.get(press);
@@ -30,7 +30,7 @@ bool UserInterface::renderEntryView() {
             bool status;
             status = loggedClient->payForLoans();
             if (!status) {
-                std::cout << "Twoje konto zostalo zablokowane" << std::endl;
+                std::cout << "Your account has been locked" << std::endl;
                 return false;
             }
             mainLoop();
@@ -44,20 +44,20 @@ bool UserInterface::renderEntryView() {
 }
 
 bool UserInterface::renderMainView() {
-    std::cout << "Nacisnij f aby wykonac transfer" << std::endl;
-    std::cout << "Nacisnij o aby zamowic nowa karte" << std::endl;
-    std::cout << "Nacisnij t aby wykonac transakcje karta" << std::endl;
-    std::cout << "Nacisnij i aby wyswietlic informacje o twoich kontach" << std::endl;
-    std::cout << "Nacisnij k aby otworzyc nowe konto" << std::endl;
-    std::cout << "Nacisnij j aby wyswietlic informacje o kredytach" << std::endl;
-    std::cout << "Nacisnij q aby wziac kredyt" << std::endl;
-    std::cout << "Nacisnij b aby wyswietlic informacje o lokacie" << std::endl;
-    std::cout << "Nacisnij d aby otworzyc lokate" << std::endl;
-    std::cout << "Nacisnij z aby zakonczyc lokate" << std::endl;
-    std::cout << "Nacisnij m aby zakupic zlote monety (wymagane konto inwestycyjne)" << std::endl;
-    std::cout << "Nacisnij s aby sprzedac posiadane zlote monety" << std::endl;
-    std::cout << "Nacisnij h aby zmienic haslo" << std::endl;
-    std::cout << "Nacisnij x aby wyjsc" << std::endl;
+    std::cout << "Press f to make a transfer" << std::endl;
+    std::cout << "Press o to order a new card" << std::endl;
+    std::cout << "Press t to make a card transaction" << std::endl;
+    std::cout << "Press i to display information about your accounts" << std::endl;
+    std::cout << "Press k to open a new account" << std::endl;
+    std::cout << "Press j to display information about loans" << std::endl;
+    std::cout << "Press q to take a loan" << std::endl;
+    std::cout << "Press b to display information about a deposit" << std::endl;
+    std::cout << "Press d to open a deposit" << std::endl;
+    std::cout << "Press z to end a deposit" << std::endl;
+    std::cout << "Press m to buy gold coins (investment account required)" << std::endl;
+    std::cout << "Press s to sell owned gold coins" << std::endl;
+    std::cout << "Press h to change password" << std::endl;
+    std::cout << "Press x to exit" << std::endl;
     char press;
     std::cin.get(press);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -110,7 +110,7 @@ bool UserInterface::renderMainView() {
 }
 
 void UserInterface::renderBannedView() {
-    std::cout << "Twoje konto zostalo zablokowane, nacisnij x aby wyjsc" << std::endl;
+    std::cout << "Your account has been locked, press x to exit" << std::endl;
 }
 
 void UserInterface::entryLoop() {
@@ -128,10 +128,10 @@ void UserInterface::mainLoop() {
 }
 
 void UserInterface::openAccount() {
-    std::cout << "Nacisnij a jesli ma to byc konto glowne" << std::endl;
-    std::cout << "Nacisnij b jesli ma to byc konto kryptowalutowe" << std::endl;
-    std::cout << "Nacisnij c jesli ma to byc konto oszczednosciowe" << std::endl;
-    std::cout << "Nacisnij d jesli ma to byc konto inwestycyjne" << std::endl;
+    std::cout << "Press a if this is to be a main account" << std::endl;
+    std::cout << "Press b if this is to be a crypto account" << std::endl;
+    std::cout << "Press c if this is to be a savings account" << std::endl;
+    std::cout << "Press d if this is to be an investment account" << std::endl;
     char press;
     std::cin.get(press);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -150,11 +150,11 @@ void UserInterface::openAccount() {
             accountType = AccountType::Investment;
         break;
         default:
-            std::cout << "Nie udalo sie utworzyc konta" << std::endl;
+            std::cout << "Failed to create account" << std::endl;
             return;
     }
     Bank::getInstance().openAccount(loggedClient->getPersonalId(), accountType);
-    std::cout << "Udalo sie utworzyc konto" << std::endl;
+    std::cout << "Account created successfully" << std::endl;
 }
 
 void UserInterface::checkAccounts() {
@@ -168,25 +168,25 @@ void UserInterface::takeLoan() {
     int months;
     int intLoanAmount;
     std::string loanAccount;
-    std::cout << "Podaj dlugosc trwania kredytu w miesiacach: " << std::endl;
+    std::cout << "Enter loan duration in months: " << std::endl;
     std::cin >> months;
     if (cinCheck()) {
         return;
     }
-    std::cout << "Podaj kwote kredytu (cale zl): " << std::endl;
+    std::cout << "Enter loan amount (whole zl): " << std::endl;
     std::cin >> intLoanAmount;
     if (cinCheck()) {
         return;
     }
     Amount loanAmount = intLoanAmount;
-    std::cout << "Twoje konta:" << std::endl;
+    std::cout << "Your accounts:" << std::endl;
     checkAccounts();
-    std::cout << "Wybierz numer konta operacyjnego dla kredytu: " << std::endl;
+    std::cout << "Choose the operational account number for the loan: " << std::endl;
     std::cin >> loanAccount;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     try {
         Bank::getInstance().takeLoan(months, loanAmount, loanAccount, loggedClient->getPersonalId());
-        std::cout << "Udalo sie wziac kredyt" << std::endl;
+        std::cout << "Loan taken successfully" << std::endl;
     } catch (InvalidAccountError & e) {
         std::cout << e.what() << std::endl;
     }
@@ -197,22 +197,22 @@ void UserInterface::registerClient() {
     std::string lastName;
     std::string personalId;
     std::string login;
-    std::cout << "Podaj imie: " << std::endl;
+    std::cout << "Enter first name: " << std::endl;
     std::cin >> name;
-    std::cout << "Podaj nazwisko: " << std::endl;
+    std::cout << "Enter last name: " << std::endl;
     std::cin >> lastName;
-    std::cout << "Podaj PESEL: " << std::endl;
+    std::cout << "Enter PESEL: " << std::endl;
     std::cin >> personalId;
-    std::cout << "Podaj login: " << std::endl;
+    std::cout << "Enter login: " << std::endl;
     std::cin >> login;
-    std::string password = passwordInput("Podaj haslo: ");
+    std::string password = passwordInput("Enter password: ");
 
     try {
         Bank::getInstance().getClientManager().registerClient(
             name, lastName, personalId, login, password
         );
 
-        std::cout << "Zarejestrowano pomyslnie" << std::endl;
+        std::cout << "Registered successfully" << std::endl;
     } catch(const RegisterFailedError& e) {
         std::cerr << e.what() << std::endl;
     }
@@ -222,10 +222,10 @@ void UserInterface::registerClient() {
 
 bool UserInterface::login() {
     std::string login;
-    std::cout << "Podaj login: ";
+    std::cout << "Enter login: ";
     std::cin >> login;
 
-    std::string password = passwordInput("Podaj haslo: ");
+    std::string password = passwordInput("Enter password: ");
 
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -238,33 +238,33 @@ bool UserInterface::login() {
         return false;
     }
 
-    std::cout << "Zalogowano jako " + loggedClient->getLogin() << std::endl;
+    std::cout << "Logged in as " + loggedClient->getLogin() << std::endl;
     return true;
 }
 
 void UserInterface::changePassword() {
-    std::string password = passwordInput("Wprowadz obecne haslo: ");
+    std::string password = passwordInput("Enter current password: ");
 
     if (!loggedClient->isPasswordCorrect(password)) {
-        std::cerr << "Wprowadzono niepoprawne haslo" << std::endl;
+        std::cerr << "Incorrect password entered" << std::endl;
         return;
     }
 
-    password = passwordInput("Wprowadz nowe haslo: ");
+    password = passwordInput("Enter new password: ");
 
     loggedClient->setPassword(password);
-    std::cout << "Haslo zostalo zmienione" << std::endl;
+    std::cout << "Password has been changed" << std::endl;
 }
 
 void UserInterface::orderNewCard() {
     std::string account;
-    std::cout << "Podaj nr. konta: " << std::endl;
+    std::cout << "Enter account no.: " << std::endl;
     std::cin >> account;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    std::cout << "Nacisnij a jesli ma to byc karta standardowa (za darmo)" << std::endl;
-    std::cout << "Nacisnij b jesli ma to byc karta zlota (koszt 100 zl)" << std::endl;
-    std::cout << "Nacisnij c jesli ma to byc karta diamentowa (koszt 500 zl)" << std::endl;
+    std::cout << "Press a if this is to be a standard card (free)" << std::endl;
+    std::cout << "Press b if this is to be a gold card (cost 100 zl)" << std::endl;
+    std::cout << "Press c if this is to be a diamond card (cost 500 zl)" << std::endl;
     char press;
     std::cin.get(press);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -287,16 +287,16 @@ void UserInterface::orderNewCard() {
     try {
         Bank::getInstance().orderNewCard(account, cardType);
     } catch (const InvalidAmountError&) {
-        std::cout << "Masz za malo srodkow, aby zamowic te karte" << std::endl;
+        std::cout << "You have insufficient funds to order this card" << std::endl;
     }
 }
 
 void UserInterface::createDeposit() {
     std::string account;
     int intAmount;
-    std::cout << "Podaj nr. konta: " << std::endl;
+    std::cout << "Enter account no.: " << std::endl;
     std::cin >> account;
-    std::cout << "Podaj kwote depozytu(cale zl): " << std::endl;
+    std::cout << "Enter deposit amount (whole zl): " << std::endl;
     std::cin >> intAmount;
     if (cinCheck()) {
         return;
@@ -305,15 +305,15 @@ void UserInterface::createDeposit() {
     Amount amount = intAmount;
     bool status = Bank::getInstance().createDeposit(account, amount);
     if (status) {
-        std::cout << "Udalo sie zalozyc lokate" << std::endl;
+        std::cout << "Deposit created successfully" << std::endl;
         return;
     }
-    std::cout << "Nie udalo sie zalozyc lokaty, sprawdz czy jest to konto oszczednosciowe" << std::endl;
+    std::cout << "Failed to create deposit, check if it is a savings account" << std::endl;
 }
 
 void UserInterface::endDeposit() {
     std::string account;
-    std::cout << "Podaj nr. konta: " << std::endl;
+    std::cout << "Enter account no.: " << std::endl;
     std::cin >> account;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     Bank::getInstance().endDeposit(account);
@@ -332,13 +332,13 @@ void UserInterface::depositInfo() {
     );
 
     if (accounts.empty()) {
-        std::cerr << "Nie posiadasz konta oszczednosciowego" << std::endl;
+        std::cerr << "You do not have a savings account" << std::endl;
         return;
     }
 
     auto pickedAccount = accounts[0];
     if (accounts.size() > 1) {
-        std::cout << "Wybierz konto oszczednosciowe:" << std::endl;
+        std::cout << "Choose a savings account:" << std::endl;
         for (int i = 0; i < accounts.size(); ++i)
             std::cout << i + 1 << ". " << accounts[i]->toString() << std::endl;
 
@@ -352,7 +352,7 @@ void UserInterface::depositInfo() {
     }
 
     if (!pickedAccount->getDeposit()) {
-        std::cerr << "Nie posiadasz zalozonej lokaty" << std::endl;
+        std::cerr << "You do not have a deposit" << std::endl;
         return;
     }
 
@@ -360,10 +360,10 @@ void UserInterface::depositInfo() {
 }
 
 void UserInterface::createTransfer() {
-    std::cout << "Twoje konta: " << std::endl;
+    std::cout << "Your accounts: " << std::endl;
     checkAccounts();
 
-    std::cout << "Podaj numer rachunku, z ktorego wykonac przelew: ";
+    std::cout << "Enter the account number from which to make the transfer: ";
     std::string senderID;
     std::cin >> senderID;
 
@@ -372,18 +372,18 @@ void UserInterface::createTransfer() {
     Bank& bank = Bank::getInstance();
     auto& accountManager = bank.getAccountManager();
     if (!accountManager.isClientsAccount(loggedClient->getId(), senderID)) {
-        std::cerr << "Nie mozna na te konto" << std::endl;
+        std::cerr << "Cannot use this account" << std::endl;
         return;
     }
 
-    std::cout << "Podaj numer rachunku do przelewu (mozesz tez podac "
-        << "numer ktoregos z twoich kont): " << std::endl;
+    std::cout << "Enter the recipient's account number (you can also enter "
+        << "the number of one of your accounts): " << std::endl;
     std::string recipientID;
     std::cin >> recipientID;
 
     if (cinCheck()) return;
 
-    std::cout << "Podaj kwote przelewu: " << std::endl;
+    std::cout << "Enter transfer amount: " << std::endl;
     std::string amountStr;
     std::cin >> amountStr;
 
@@ -408,18 +408,18 @@ void UserInterface::createTransfer() {
         return;
     }
 
-    std::cout << "Wykonano przelew :~~)" << std::endl;
+    std::cout << "Transfer executed :~~)" << std::endl;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 void UserInterface::transaction() {
     std::string account;
-    std::cout << "Podaj nr. konta nadawcy: " << std::endl;
+    std::cout << "Enter sender's account no.: " << std::endl;
     std::cin >> account;
     std::string recipentAccount;
-    std::cout << "Podaj nr. konta odbiorcy: " << std::endl;
+    std::cout << "Enter recipient's account no.: " << std::endl;
     std::cin >> recipentAccount;
-    std::cout << "Podaj kwote transakcji: " << std::endl;
+    std::cout << "Enter transaction amount: " << std::endl;
     std::string amountStr;
     std::cin >> amountStr;
 
@@ -436,7 +436,7 @@ void UserInterface::transaction() {
     }
     bool status =  Bank::getInstance().transaction(account, recipentAccount, amount);
     if (!status) {
-        std::cout << "Transakcja nie powiodla sie" << std::endl;
+        std::cout << "Transaction failed" << std::endl;
     }
 }
 
@@ -444,7 +444,7 @@ bool UserInterface::cinCheck() {
     if (std::cin.fail()) {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Niepoprawny format" << std::endl;
+        std::cout << "Invalid format" << std::endl;
         return true;
     }
     return false;
@@ -459,13 +459,13 @@ void UserInterface::buyGold() {
     );
 
     if (accounts.empty()) {
-        std::cerr << "Nie posiadasz konta inwestycyjnego" << std::endl;
+        std::cerr << "You do not have an investment account" << std::endl;
         return;
     }
 
     auto pickedAccount = accounts[0];
     if (accounts.size() > 1) {
-        std::cout << "Wybierz konto inwestycyjne:" << std::endl;
+        std::cout << "Choose an investment account:" << std::endl;
         for (int i = 0; i < accounts.size(); ++i)
             std::cout << i + 1 << ". " << accounts[i]->toString() << std::endl;
 
@@ -478,7 +478,7 @@ void UserInterface::buyGold() {
         pickedAccount = accounts[index];
     }
 
-    std::cout << "Wprowadz liczbe zlotych monet, ktora chcesz kupic: ";
+    std::cout << "Enter the number of gold coins you want to buy: ";
     int count;
     std::cin >> count;
     if (cinCheck() || count <= 0) return;
@@ -487,7 +487,7 @@ void UserInterface::buyGold() {
 
     try {
         pickedAccount->buyGold(count);
-        std::cout << "Zakupiono zlote monety" << std::endl;
+        std::cout << "Gold coins purchased" << std::endl;
     } catch(const NotEnoughMoney& e) {
         std::cerr << e.what() << std::endl;
     } catch(const GoldError& e) {
@@ -504,13 +504,13 @@ void UserInterface::sellGold() {
     );
 
     if (accounts.empty()) {
-        std::cerr << "Nie posiadasz konta inwestycyjnego" << std::endl;
+        std::cerr << "You do not have an investment account" << std::endl;
         return;
     }
 
     auto pickedAccount = accounts[0];
     if (accounts.size() > 1) {
-        std::cout << "Wybierz konto inwestycyjne:" << std::endl;
+        std::cout << "Choose an investment account:" << std::endl;
         for (int i = 0; i < accounts.size(); ++i)
             std::cout << i + 1 << ". " << accounts[i]->toString() << std::endl;
 
@@ -525,7 +525,7 @@ void UserInterface::sellGold() {
 
     try {
         Amount earned = pickedAccount->sellGold();
-        std::cout << "Sprzedano zlote monety. Zysk: " << earned << std::endl;
+        std::cout << "Gold coins sold. Profit: " << earned << std::endl;
     } catch(const GoldError& e) {
         std::cerr << e.what() << std::endl;
     }

@@ -18,7 +18,7 @@ Amount Amount::fromString(const std::string& str) {
 
     std::smatch match;
     if (!std::regex_match(str, match, pattern))
-        throw InvalidAmountError{"Podano kwote w niepoprawnym formacie"};
+        throw InvalidAmountError{"Invalid amount format"};
 
     unsigned int zloty = std::stoi(match[1].str());
     unsigned int grosz = 0;
@@ -78,7 +78,7 @@ void Amount::operator-=(const Amount& right) {
 
 Amount Amount::operator-(const Amount& right) const {
     if (right > *this)
-        throw InvalidAmountError{"Wynik odejmowania kwot mniejszy od zera"};
+        throw InvalidAmountError{"Result of amount subtraction less than zero"};
 
     unsigned int zloty = this->zloty, grosz = this->grosz;
     if (right.grosz > grosz) {
