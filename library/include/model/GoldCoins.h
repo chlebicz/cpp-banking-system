@@ -7,14 +7,14 @@
 namespace pt = boost::posix_time;
 
 /**
- * Klasa reprezentująca pewną ilość złotych monet
+ * Class representing a certain amount of gold coins
  */
 class GoldCoins : public Serializable {
 public:
     /**
-     * Konstruktor
-     * @param count Liczba złotych monet
-     * @param purchaseTime Czas zakupu
+     * Constructor
+     * @param count Number of gold coins
+     * @param purchaseTime Purchase time
      */
     explicit GoldCoins(
         int count,
@@ -22,38 +22,37 @@ public:
     );
 
     /**
-     * @returns Ilosc zlotych monet
+     * @returns Number of gold coins
      */
     int getCount() const;
 
     /**
-     * @return Czas zakupu złotych monet
+     * @return Gold coins purchase time
      */
     pt::ptime getPurchaseTime() const;
 
     /**
-     * Oblicza obecną wartość złotych monet.
-     * Cena złotej monety wzrasta o złotówkę co dobę.
-     * @param date Czas, dla którego obliczyć wartość
+     * Calculates the current value of gold coins.
+     * The price of a gold coin increases by one zloty every day.
+     * @param date Time for which to calculate the value
      */
     Amount calculateValue(pt::ptime date = pt::second_clock::local_time());
 
     /**
-     * Funkcja zwracająca właściwości obiektu jako string
-     * @return Zwraca informacje o koncie
+     * Function returning object properties as a string
+     * @return Returns information about the account
      */
     std::string toString() const override;
 
     /**
-     * @returns Wszystkie informacje o danym obiekcie w formacie JSON, które
-     *          są potrzebne do otworzenia jego stanu przy odczycie z pliku
+     * @returns All information about the object in JSON format, needed to restore its state when reading from a file
      */
     json toJSON() const override;
 
     /**
-     * Tworzy obiekt z danych w formacie JSON
-     * @param source Informacje o obiekcie w formacie JSON
-     * @returns Obiekt złotych monet
+     * Creates an object from data in JSON format
+     * @param source Information about the object in JSON format
+     * @returns Gold coins object
      */
     static std::shared_ptr<GoldCoins> fromJSON(const json& source);
 private:

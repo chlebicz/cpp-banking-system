@@ -2,18 +2,18 @@
 #include <string>
 
 /**
- * Klasa abstrakcyjna, której obiekty można jednoznacznie rozróżnić
- * poprzez unikalny identyfikator
+ * Abstract class whose objects can be uniquely distinguished
+ * by a unique identifier
  */
 class Identifiable {
 public:
     /**
-     * Destruktor wirtualny
+     * Virtual destructor
      */
     virtual ~Identifiable() = default;
 
     /**
-     * @returns Unikalny identyfikator obiektu
+     * @returns Unique object identifier
      */
     virtual std::string getId() const = 0;
 };

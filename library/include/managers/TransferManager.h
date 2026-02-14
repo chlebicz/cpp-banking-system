@@ -7,108 +7,108 @@ class ClientManager;
 class AccountManager;
 
 /**
- * Wyjątek zgłaszany kiedy nie uda się wykonać przelewu o podanych parameterach
+ * Exception thrown when a transfer with the given parameters cannot be performed
  */
 class InvalidTransferError : public std::logic_error {
 public:
     /**
-     * Konstruktor
-     * @param msg Wiadomość pozwalająca ocenić źródło błędu
+     * Constructor
+     * @param msg Message allowing to evaluate the source of the error
      */
     explicit InvalidTransferError(const std::string& msg)
         : std::logic_error(msg) {}
 };
 
 /**
- * Menedżer przelewów
+ * Transfer Manager
  */
 class TransferManager {
 public:
     /**
-     * Konstruktor
-     * @param clientManager Menedżer klientów
-     * @param accountManager Menedżer kont
+     * Constructor
+     * @param clientManager Client manager
+     * @param accountManager Account manager
      */
     TransferManager(
         ClientManager& clientManager, AccountManager& accountManager
     );
 
     /**
-     * Rejestruje przelew o podanych parametrach
-     * @param senderID Numer rachunku konta, z którego poszedł przelew
-     * @param recipientID Numer rachunku odbiorcy
-     * @param amount Kwota przelewu
-     * @param type Typ przelewu
-     * @returns Obiekt utworzonego przelewu
-     * @throws NotEnoughMoney Kiedy na koncie nie ma wystarczająco środków
-     * @throws InvalidTransferError Kiedy przelew ma niepoprawny typ
+     * Registers a transfer with the given parameters
+     * @param senderID Account number of the account from which the transfer was sent
+     * @param recipientID Recipient's account number
+     * @param amount Transfer amount
+     * @param type Transfer type
+     * @returns Created transfer object
+     * @throws NotEnoughMoney When there are not enough funds on the account
+     * @throws InvalidTransferError When the transfer has an incorrect type
      */
     std::shared_ptr<Transfer> createTransfer(
         std::string senderID, std::string recipientID, Amount amount
     );
 
     /**
-     * @param transferID Identyfikator przelewu
-     * @returns Obiekt przelewu o podanym identyfikatorze
+     * @param transferID Transfer identifier
+     * @returns Transfer object with the given identifier
      */
     std::shared_ptr<Transfer> getTransfer(const std::string& transferID);
 
     /**
-     * Znajduje wszystkie przelewy (wychodzące i przychodzące), które
-     * dotyczą danego użytkownika.
-     * @param personalId Numer PESEL klienta
-     * @returns Wektor z obiektami znalezionych przelewów
+     * Finds all transfers (outgoing and incoming) that
+     * concern a given user.
+     * @param personalId Client's PESEL number
+     * @returns Vector with found transfer objects
      */
     std::vector<std::shared_ptr<Transfer>> findUserTransfers(
         const std::string& personalId
     );
 
     /**
-     * Znajduje wszystkie przelewy (wychodzące i przychodzące), które
-     * dotyczą danego rachunku.
-     * @param accountNumber Numer rachunku konta
-     * @returns Wektor z obiektami znalezionych przelewów
+     * Finds all transfers (outgoing and incoming) that
+     * concern a given account.
+     * @param accountNumber Account number
+     * @returns Vector with found transfer objects
      */
     std::vector<std::shared_ptr<Transfer>> findAccountTransfers(
         const std::string& accountNumber
     );
 
     /**
-     * Znajduje pierwszy przelew spełniający podany predykat
-     * @param predicate Predykat
-     * @returns Obiekt znalezionego przelewu
+     * Finds the first transfer satisfying the given predicate
+     * @param predicate Predicate
+     * @returns Found transfer object
      */
     std::shared_ptr<Transfer> findFirst(
         const Predicate<std::shared_ptr<Transfer>>& predicate
     );
 
     /**
-     * Znajduje wszystkie przelewy spełniające podany predykat
-     * @param predicate Predykat
-     * @returns Wektor z obiektami znalezionych przelewów
+     * Finds all transfers satisfying the given predicate
+     * @param predicate Predicate
+     * @returns Vector with found transfer objects
      */
     std::vector<std::shared_ptr<Transfer>> findAll(
         const Predicate<std::shared_ptr<Transfer>>& predicate
     );
 
     /**
-     * @returns Wszystkie obiekty przelewów
+     * @returns All transfer objects
      */
     const std::vector<std::shared_ptr<Transfer>>& getAll();
 
     /**
-     * Ładuje obiekty przelewów z plików do repozytorium
+     * Loads transfer objects from files to the repository
      */
     void load();
 
     /**
-     * Zapisuje obiekty przelewów z repozytorium do plików
+     * Saves transfer objects from the repository to files
      */
     void save();
 
     /**
-     * Obsługuje przychodzące przelewy zewnętrzne, których dane zostały
-     * zapisane w odpowiednich plikach.
+     * Handles incoming external transfers whose data has been
+     * saved in appropriate files.
      */
     void handleIncomingExternalTransfers();
 private:

@@ -9,7 +9,7 @@
 #include "Serializable.h"
 
 /**
- * Typ konta
+ * Account type
  */
 enum class AccountType {
     Main,
@@ -19,37 +19,37 @@ enum class AccountType {
 };
 
 /**
- * Wyjątek zgłaszany kiedy na koncie nie ma środków by wykonać
- * daną operację
+ * Exception thrown when there are not enough funds on the account to perform
+ * a given operation
  */
 class NotEnoughMoney : public std::logic_error {
 public:
     /**
-     * Konstruktor
-     * @param msg Wiadomość pozwalająca ocenić źródło błędu
+     * Constructor
+     * @param msg Message allowing to evaluate the source of the error
      */
     explicit NotEnoughMoney(const std::string& msg)
         : std::logic_error(msg) {}
 };
 
 /**
- * Konto
+ * Account
  */
 class Account : public Entity {
 public:
     /**
-     * Konstruktor parametrowy
-     * @param accountNumber Numer rachunku
-     * @param ownerID Identyfikator klienta posiadacza konta
+     * Parameterized constructor
+     * @param accountNumber Account number
+     * @param ownerID Client ID of the account holder
      */
     Account(std::string accountNumber, std::string ownerID);
 
     /**
-     * Konstruktor z danych z pliku
-     * @param accountNumber Numer rachunku
-     * @param ownerID Identyfikator klienta posiadacza konta
-     * @param balance Stan konta
-     * @param cards Wektor kard przypisanych do konta
+     * Constructor from file data
+     * @param accountNumber Account number
+     * @param ownerID Client ID of the account holder
+     * @param balance Account balance
+     * @param cards Vector of cards assigned to the account
      */
     Account(
         std::string accountNumber, std::string ownerID, Amount balance,
@@ -57,87 +57,85 @@ public:
     );
 
     /**
-     * Getter salda
-     * @returns Zwraca stan konta
+     * Balance getter
+     * @returns Returns the account balance
      */
     Amount getBalance() const;
 
     /**
-     * Setter salda
-     * @param value Kwota na jaką chcemy ustawić saldo
+     * Balance setter
+     * @param value Amount to set as the balance
      */
     void setBalance(const Amount &value);
 
     /**
-     * Getter numeru konta
-     * @returns Zwraca numer konta
+     * Account number getter
+     * @returns Returns the account number
      */
     const std::string& getAccountNumber() const;
 
     /**
-     * Getter PESELu właściciela konta
-     * @returns Zwraca PESEL
+     * Account holder PESEL getter
+     * @returns Returns PESEL
      */
     const std::string& getOwnerID() const;
 
     /**
-    * Getter kart przypisanych do konta
-    * @returns Zwraca wektor z kartami
+    * Getter for cards assigned to the account
+    * @returns Returns a vector of cards
     */
     const std::vector<std::shared_ptr<Card>>& getCards() const;
 
     /**
-     * Dodawanie kart do konta
-     * @param card Karta którą chcemy przypisać do konta
+     * Adding cards to the account
+     * @param card Card to assign to the account
      */
     void addCard(const std::shared_ptr<Card> &card);
 
     /**
-     * Usuwanie kart z konta
-     * @param card Karta którą chcemy usunąć z konta
+     * Removing cards from the account
+     * @param card Card to remove from the account
      */
     void removeCard(const std::shared_ptr<Card> &card);
 
     /**
-     * Funkcja wykonująca transakcje
-     * @param amount Kwota transakcji
-     * @param account Konto na które wykonujemy transakcje
+     * Function performing transactions
+     * @param amount Transaction amount
+     * @param account Account to which the transaction is made
      */
     bool transaction(const Amount &amount, const std::shared_ptr<Account> &account);
 
     /**
-     * @return Istotne informacje o danym obiekcie zapisane w formacie
-     *         przyjaznym użytkownikowi
+     * @return Significant information about the object saved in a user-friendly format
      */
     std::string toString() const override;
 
     /**
-     * @returns Unikalny identyfikator obiektu
+     * @returns Unique object identifier
      */
     std::string getId() const override;
 
     /**
-     * @returns Wszystkie informacje o danym obiekcie w formacie JSON, które
-     *          są potrzebne do otworzenia jego stanu przy odczycie z pliku
+     * @returns All information about the object in JSON format, needed to restore its state when reading from a file
      */
     json toJSON() const override;
 
     /**
-     * @returns Typ konta
+     * @returns Account type
      */
     virtual AccountType getType() const = 0;
 
     /**
-     * Tworzy obiekt (uwzględniając odpowiedni typ konta) na bazie informacji
-     * w formacie JSON
-     * @param source Informacje o obiekcie w formacie JSON
-     * @returns Utworzony obiekt
+     * Creates an object (taking into account the appropriate account type) based on information
+     * in JSON format
+     * @param source Information about the object in JSON format
+     * @returns Created object
      */
     static std::shared_ptr<Account> fromJSON(const json& source);
 
     /**
-     * Funkcja zwracające opłatę za transfery z użyciem konta
-     * @return Zwraca opłatę transferową
+     * Function returning the fee for transfers using the account
+     * @return Returns the transfer fee
      */
     virtual Amount getFee();
 private:
@@ -147,8 +145,8 @@ private:
     std::vector<std::shared_ptr<Card>> cards;
 protected:
     /**
-     * Konstruktor z JSONa
-     * @param source Informacje o koncie w formacie JSON
+     * Constructor from JSON
+     * @param source Information about the account in JSON format
      */
     explicit Account(const json& source);
 };

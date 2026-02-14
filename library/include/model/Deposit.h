@@ -7,52 +7,51 @@ namespace gr = boost::gregorian;
 class Deposit : public Serializable {
 public:
     /**
-     * Konstruktor parametrowy
-     * @param amount Kwota lokaty
-     * @param beginTime Data rozpoczęcia lokaty
+     * Parameterized constructor
+     * @param amount Deposit amount
+     * @param beginTime Deposit start date
      */
     Deposit(const Amount &amount, const gr::date &beginTime);
 
     /**
-     * Getter kwoty lokaty
-     * @returns Zwraca kwotę lokaty
+     * Deposit amount getter
+     * @returns Returns the deposit amount
      */
     Amount getAmount() const;
 
     /**
-     * Getter dnia rozpoczęcia lokaty
-     * @returns Zwraca dzień rozpoczęcia lokaty
+     * Deposit start date getter
+     * @returns Returns the deposit start date
      */
     gr::date getBeginTime() const;
 
     /**
-     * Funkcja kończąca lokatę, oblicza kwotę jaka powinna zostać zwrócona na konto
-     * @returns Zwraca kwotę lokaty powiększoną o odsetki
+     * Function ending the deposit, calculates the amount that should be returned to the account
+     * @returns Returns the deposit amount plus interest
      */
     Amount endDeposit();
 
     /**
-     * Funkcja zwracająca właściwości obiektu jako string
-     * @returns Zwraca dane lokaty
+     * Function returning object properties as a string
+     * @returns Returns deposit data
      */
     std::string toString() const override;
 
     /**
-     * @returns Wszystkie informacje o danym obiekcie w formacie JSON, które
-     *          są potrzebne do otworzenia jego stanu przy odczycie z pliku
+     * @returns All information about the object in JSON format, needed to restore its state when reading from a file
      */
     json toJSON() const override;
 
     /**
-     * Tworzy obiekt na bazie informacji w formacie JSON
-     * @param source Informacje o obiekcie w formacie JSON
-     * @returns Utworzony obiekt
+     * Creates an object based on information in JSON format
+     * @param source Information about the object in JSON format
+     * @returns Created object
      */
     static std::shared_ptr<Deposit> fromJSON(const json& j);
 private:
-    /// Kwota lokaty
+    /// Deposit amount
     Amount amount;
 
-    /// Dzień rozpoczęcia lokaty
+    /// Deposit start date
     gr::date beginTime;
 };
