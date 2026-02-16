@@ -29,7 +29,7 @@ void StorageHandler::removeObject(std::shared_ptr<Entity> object) {
 json StorageHandler::getObjectData(const std::string& id) const {
     std::ifstream file{dir / id};
     if (!file.good())
-        throw StorageError{"Nie udalo sie otworzyc pliku"};
+        throw StorageError{"Failed to open file"};
 
     return json::parse(file);
 }
@@ -58,9 +58,8 @@ void StorageHandler::saveObject(const std::string& id, const json& data) {
 
     std::ofstream file{dir / id};
     if (!file.good())
-        throw std::runtime_error{"Nie udalo sie otworzyc pliku"};
+        throw std::runtime_error{"Failed to open file"};
 
     file << data;
     file.close();
 }
-

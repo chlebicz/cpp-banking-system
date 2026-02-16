@@ -15,7 +15,7 @@ CardType DiamondCard::getType() const {
 }
 
 std::string DiamondCard::toString() const {
-    return "Karta Diamond - brak oplat dodatkowych";
+    return "Diamond Card - no additional fees";
 }
 
 Amount DiamondCard::getPrice() const {

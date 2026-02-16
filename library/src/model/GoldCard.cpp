@@ -13,7 +13,7 @@ CardType GoldCard::getType() const {
 }
 
 std::string GoldCard::toString() const {
-    return "Karta Gold - przy kazdej platnosci oplata dodatkowa 3% kwoty";
+    return "Gold Card - additional fee of 3% of amount for each payment";
 }
 
 Amount GoldCard::getPrice() const {

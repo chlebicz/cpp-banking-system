@@ -41,7 +41,7 @@ std::string GoldCoins::toString() const {
     auto date = purchaseTime.date();
 
     std::ostringstream oss;
-    oss << count << " zlotych monet, zakupione "
+    oss << count << " gold coins, purchased "
         << std::setfill('0') << std::setw(2) << date.day() << "."
         << std::setfill('0') << std::setw(2) << static_cast<int>(date.month())
         << "." << date.year();

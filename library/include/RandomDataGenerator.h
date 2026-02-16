@@ -2,17 +2,17 @@
 #include <string>
 
 /**
- * Generator losowych danych
+ * Random data generator
  */
 class RandomDataGenerator {
 public:
     /**
-     * @return Losowy numer rachunku w formacie IBAN
+     * @return Random account number in IBAN format
      */
     static std::string generateIBAN();
 
     /**
-     * @returns Losowy identyfikator
+     * @returns Random identifier
      */
     static std::string generateID();
 private:

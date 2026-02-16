@@ -5,8 +5,8 @@
 #include "managers/TransferManager.h"
 
 /**
- * Wyjątek "Bankrutwo" oznacza, że bank nie miał środków na obsługę
- * klientów. Po zgłoszeniu wyjątku niemożliwe jest funkcjonowanie aplikacji
+ * "Bankruptcy" exception means that the bank did not have funds to handle
+ * clients. After throwing the exception, the application cannot function.
  */
 class Bankruptcy : public std::runtime_error {
 public:
@@ -15,140 +15,140 @@ public:
 
 
 /**
- * Wyjątek związany z operowaniem na niepoprawnym koncie
+ * Exception related to operating on an invalid account
  */
 class InvalidAccountError : public std::logic_error {
 public:
     /**
-     * Konstruktor
-     * @param msg Wiadomość pozwalająca ocenić źródło błędu
+     * Constructor
+     * @param msg Message allowing to evaluate the source of the error
      */
     explicit InvalidAccountError(const std::string& msg);
 };
 
 /**
- * Singleton gromadzący cały stan banku
+ * Singleton gathering the entire state of the bank
  */
 class Bank {
 public:
     /**
-     * @returns Instancja singletona
+     * @returns Singleton instance
      */
     static Bank& getInstance();
 
     /**
-     * @returns Bieżący stan konta banku
+     * @returns Current bank account balance
      */
     Amount getBalance() const;
 
     /**
-     * Zmienia stan konta banku
-     * @param value Nowy stan konta
+     * Changes the bank account balance
+     * @param value New account balance
      */
     void setBalance(Amount value);
 
     /**
-     * Zwiększa stan konta banku o ustaloną kwotę
-     * @param by Kwota
+     * Increases the bank account balance by a set amount
+     * @param by Amount
      */
     void increaseBalance(Amount by);
 
     /**
-     * Zmniejsza stan konta banku o ustaloną kwotę
-     * @param by Kwota
-     * @throws Bankruptcy Kiedy bank nie ma pieniążków
+     * Decreases the bank account balance by a set amount
+     * @param by Amount
+     * @throws Bankruptcy When the bank has no money
      */
     void decreaseBalance(Amount by);
 
     /**
-     * @returns Menedżer klientów
+     * @returns Client manager
      */
     ClientManager& getClientManager();
 
     /**
-     * @returns Menedżer przelewów
+     * @returns Transfer manager
      */
     TransferManager& getTransferManager();
 
     /**
-     * @returns Menedżer kont
+     * @returns Account manager
      */
     AccountManager& getAccountManager();
 
     /**
-     * Wczytuje stan wszystkich menedżerów z plików
+     * Loads the state of all managers from files
      */
     void loadAll();
 
     /**
-     * Zapisuje stan wszystkich menedżerów do plików
+     * Saves the state of all managers to files
      */
     void saveAll();
 
     /**
-     * Funkcja pośrednicząca przy otwarciu konta
-     * @param clientID PESEL klienta
-     * @param accountType Typ konta
+     * Function mediating in opening an account
+     * @param clientID Client PESEL
+     * @param accountType Account type
      */
     void openAccount(std::string clientID, AccountType accountType);
 
     /**
-     * Funkcja pośrednicząca w braniu kredytu
-     * @param months Długość kredytu
-     * @param amount Kwota kredytu
-     * @param number Numer konta operacyjnego
-     * @param clientID PESEL klienta
+     * Function mediating in taking a loan
+     * @param months Loan duration
+     * @param amount Loan amount
+     * @param number Operational account number
+     * @param clientID Client PESEL
      */
     void takeLoan(int months, Amount amount, std::string number, std::string clientID);
 
     /**
-     * Funkcja zwracająca wektor z kontami klienta
-     * @param clientID PESEL klienta
-     * @return Wektor z kontami
+     * Function returning a vector with client accounts
+     * @param clientID Client PESEL
+     * @return Vector with accounts
      */
     std::vector<std::shared_ptr<Account>> checkAccounts(std::string clientID);
 
     /**
-     * Funkcja pośrednicząca w zamawianiu karty dla klienta
-     * @param number Numer konta
-     * @param cardType Typ karty
+     * Function mediating in ordering a card for a client
+     * @param number Account number
+     * @param cardType Card type
      */
     void orderNewCard(std::string number, CardType cardType);
 
     /**
-     * Funkcja tworząca depozyt
-     * @param number Numer konta
-     * @param amount Kwota depozytu
-     * @return Wartość logiczna czy operacja się powiodła
+     * Function creating a deposit
+     * @param number Account number
+     * @param amount Deposit amount
+     * @return Boolean value whether the operation succeeded
      */
     bool createDeposit(std::string number, Amount amount);
 
     /**
-     * Funkcja kończąca depozyt
-     * @param number Numer konta
+     * Function ending a deposit
+     * @param number Account number
      */
     void endDeposit(std::string number);
 
     /**
-     * Funkcja zwracająca informację o kredytach klienta
-     * @param clientID PESEL klienta
+     * Function returning information about client loans
+     * @param clientID Client PESEL
      * @return
      */
     std::string loanInfo(std::string clientID);
 
     /**
-     * Funkcja zwracająca informacje o lokacie
-     * @param number Numer konta
-     * @return Informacje o lokacie
+     * Function returning information about a deposit
+     * @param number Account number
+     * @return Information about the deposit
      */
     std::string depositInfo(std::string number);
 
     /**
-     * Funkcja pozwalająca wykonać transakcje
-     * @param number Konto nadawcy
-     * @param number2 Konto odbiorcy
-     * @param amount Kwota transakcji
-     * @return Wartość logiczna czy transakcja się powiodła
+     * Function allowing to perform transactions
+     * @param number Sender account
+     * @param number2 Recipient account
+     * @param amount Transaction amount
+     * @return Boolean value whether the transaction succeeded
      */
     bool transaction(std::string number, std::string number2, Amount amount);
 private:

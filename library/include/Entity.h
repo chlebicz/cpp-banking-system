@@ -3,7 +3,7 @@
 #include "Serializable.h"
 
 /**
- * Klasa abstrakcyjna zarządzana przez StorageHandler, której obiekty
- * można utrwalić i jednoznacznie rozróżnić poprzez unikalny identyfikator
+ * Abstract class managed by StorageHandler, whose objects
+ * can be persisted and uniquely distinguished by a unique identifier
  */
 class Entity : public Serializable, public Identifiable {};

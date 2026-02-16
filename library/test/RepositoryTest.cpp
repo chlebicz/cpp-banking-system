@@ -7,22 +7,22 @@ BOOST_AUTO_TEST_SUITE(RepositoryTest)
 class TestObject {
 public:
     /**
-     * Konstruktor
-     * @param test Parametr testowy
+     * Constructor
+     * @param test Test parameter
      */
     TestObject(int test)
         : test(test) {}
 
     /**
-     * @returns Parametr testowy
+     * @returns Test parameter
      */
     int getTest() const {
         return test;
     }
 
     /**
-     * Ustawia nową wartość parametru testowego
-     * @param value Nowa wartość
+     * Sets new value of test parameter
+     * @param value New value
      */
     void setTest(int value) {
         test = value;

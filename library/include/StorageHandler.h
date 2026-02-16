@@ -8,70 +8,70 @@
 #include "Entity.h"
 
 /**
- * Bład związany z obsługą plików
+ * Error related to file handling
  */
 class StorageError : public std::runtime_error {
 public:
     /**
-     * Konstruktor
-     * @param message Wiadomość pozwalająca ocenić źródło błędu
+     * Constructor
+     * @param message Message allowing to evaluate the source of the error
      */
     explicit StorageError(const std::string& message);
 };
 
 /**
- * Klasa odpowiadająca za zapis i odczyt danych z plików
+ * Class responsible for reading and writing data from/to files
  */
 class StorageHandler {
 public:
     /**
-     * Konstruktor z ścieżki do katalogu z plikami obiektów
-     * @param dir Ścieżka do katalogu, w którym są przechowywane pliki obiektów
+     * Constructor from the path to the directory with object files
+     * @param dir Path to the directory where object files are stored
      */
     StorageHandler(std::filesystem::path dir);
 
     /**
-     * Usuwa istniejący w bazie obiekt; jeśli obiekt nie istnieje,
-     * funkcja nic nie robi
-     * @param id Identyfikator obiektu
+     * Removes an existing object in the database; if the object does not exist,
+     * the function does nothing
+     * @param id Object identifier
      */
     void removeObject(const std::string& id);
 
     /**
-     * Usuwa wszystkie obiekty z bazy
+     * Removes all objects from the database
      */
     void removeAll();
 
     /**
-     * Usuwa istniejący w bazie obiekt; jeśli obiekt nie istnieje,
-     * funkcja nic nie robi
-     * @param object Obiekt do usunięcia
+     * Removes an existing object in the database; if the object does not exist,
+     * the function does nothing
+     * @param object Object to remove
      */
     void removeObject(std::shared_ptr<Entity> object);
 
     /**
-     * Uzyskuje reprezentację w formacie JSON danego obiektu z pliku
-     * @param id Identyfikator obiektu
-     * @returns Zawartość obiektu w formacie JSON
-     * @throws StorageError Jeśli wystąpi błąd odczytu/nie istnieje obiekt o podanym ID.
+     * Obtains the JSON format representation of a given object from a file
+     * @param id Object identifier
+     * @returns Object content in JSON format
+     * @throws StorageError If a read error occurs/an object with the given ID does not exist.
      */
     json getObjectData(const std::string& id) const;
 
     /**
-     * @returns Wszystkie obiekty w formacie JSON zapisane w plikach
+     * @returns All objects in JSON format saved in files
      */
     std::unordered_map<std::string, json> getAllObjects() const;
 
     /**
-     * Zapisuje nowy obiekt/aktualizuje istniejący do pliku
-     * @param object Obiekt do zapisania
+     * Saves a new object/updates an existing one to a file
+     * @param object Object to save
      */
     void saveObject(std::shared_ptr<Entity> object);
 
     /**
-     * Zapisuje obiekt do pliku
-     * @param id Identyfikator obiektu
-     * @param data Obiekt w formacie JSON
+     * Saves an object to a file
+     * @param id Object identifier
+     * @param data Object in JSON format
      */
     void saveObject(const std::string& id, const json& data);
 private:

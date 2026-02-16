@@ -1,6 +1,6 @@
 #include "model/CryptoAccount.h"
 
-/// Konstruktor
+/// Constructor
 CryptoAccount::CryptoAccount(
     const std::string &accountNumber, const std::string &id
 )
@@ -12,7 +12,7 @@ CryptoAccount::CryptoAccount(const json& source)
 {}
 
 std::string CryptoAccount::toString() const {
-    return "Konto kryptowalutowe " + Account::toString();
+    return "Crypto Account " + Account::toString();
 }
 
 json CryptoAccount::toJSON() const {

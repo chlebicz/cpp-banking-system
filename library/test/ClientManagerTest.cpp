@@ -5,7 +5,7 @@
 BOOST_AUTO_TEST_SUITE(AccountManagerTest)
 
 /**
- * @test Sprawdza rejestrowanie klientów za pomocą menadżera
+ * @test Checks client registration using the manager
  */
 BOOST_AUTO_TEST_CASE(RegisterClientTest) {
     ClientManager clientManager;
@@ -31,8 +31,8 @@ BOOST_AUTO_TEST_CASE(RegisterClientTest) {
 }
 
 /**
- * @test Sprawdza, czy registerClient wyrzuca wyjątek, jeśli klient
- *       o podanym numerze PESEL już istnieje
+ * @test Checks if registerClient throws an exception if a client
+ *       with the given PESEL number already exists
  */
 BOOST_AUTO_TEST_CASE(RegisterClientThrowsGivenExistingIDTest) {
     ClientManager clientManager;
@@ -50,8 +50,8 @@ BOOST_AUTO_TEST_CASE(RegisterClientThrowsGivenExistingIDTest) {
 }
 
 /**
- * @test Sprawdza, czy registerClient wyrzuca wyjątki, jeśli klient
- *       o podanym loginie istnieje
+ * @test Checks if registerClient throws exceptions if a client
+ *       with the given login exists
  */
 BOOST_AUTO_TEST_CASE(RegisterClientThrowsGivenExistingLoginTest) {
     ClientManager clientManager;
@@ -69,17 +69,17 @@ BOOST_AUTO_TEST_CASE(RegisterClientThrowsGivenExistingLoginTest) {
 }
 
 /**
- * @test Sprawdza, czy getClient zwraca nullptr, jeśli klient o podanym
- *       numerze PESEL już istnieje
+ * @test Checks if getClient returns nullptr if a client with the given
+ *       PESEL number does not exist
  */
 BOOST_AUTO_TEST_CASE(GetClientReturnsNullptrGivenNonexistentIDTest) {
     ClientManager clientManager;
 
-    BOOST_TEST(clientManager.getClient("nieistniejacy") == nullptr);
+    BOOST_TEST(clientManager.getClient("nonexistent") == nullptr);
 }
 
 /**
- * @test Sprawdza poprawne logowanie za pomocą menadżera
+ * @test Checks correct login using the manager
  */
 BOOST_AUTO_TEST_CASE(LoginTest) {
     ClientManager clientManager;
@@ -96,8 +96,8 @@ BOOST_AUTO_TEST_CASE(LoginTest) {
 }
 
 /**
- * @test Sprawdza, czy login zgłasza wyjątek jeśli nie istnieje klient
- *       o podanym loginie
+ * @test Checks if login throws an exception if a client
+ *       with the given login does not exist
  */
 BOOST_AUTO_TEST_CASE(LoginInvalidUsernameTest) {
     ClientManager clientManager;
@@ -112,8 +112,8 @@ BOOST_AUTO_TEST_CASE(LoginInvalidUsernameTest) {
 }
 
 /**
- * @test Sprawdza, czy login zgłasza wyjątek, jeśli wprowadzone hasło jest
- *       niepoprawne
+ * @test Checks if login throws an exception if the entered password is
+ *       incorrect
  */
 BOOST_AUTO_TEST_CASE(LoginInvalidPasswordTest) {
     ClientManager clientManager;
@@ -128,8 +128,7 @@ BOOST_AUTO_TEST_CASE(LoginInvalidPasswordTest) {
 }
 
 /**
- * @test Sprawdza, czy konto klienta jest blokowane po 5 nieudanych próbach
- *       logowania
+ * @test Checks if the client's account is locked after 5 failed login attempts
  */
 BOOST_AUTO_TEST_CASE(LoginInvalidPasswordAccountLockTest) {
     ClientManager clientManager;
@@ -150,8 +149,8 @@ BOOST_AUTO_TEST_CASE(LoginInvalidPasswordAccountLockTest) {
 }
 
 /**
- * @test Sprawdza, czy po poprawnym zalogowaniu licznik niepoprawnych prób
- *       zalogowania do blokady jest resetowany
+ * @test Checks if after a successful login the counter of failed login attempts
+ *       before lock is reset
  */
 BOOST_AUTO_TEST_CASE(IncorrectLoginsCountResetTest) {
     ClientManager clientManager;
@@ -171,7 +170,7 @@ BOOST_AUTO_TEST_CASE(IncorrectLoginsCountResetTest) {
 }
 
 /**
- * @test Sprawdza wyszukiwanie klienta predykatem
+ * @test Checks finding a client by predicate
  */
 BOOST_AUTO_TEST_CASE(FindClientTest) {
     ClientManager clientManager;
@@ -189,7 +188,7 @@ BOOST_AUTO_TEST_CASE(FindClientTest) {
 }
 
 /**
- * @test Test negatywny wyszukiwania klienta predykatem
+ * @test Negative test of finding a client by predicate
  */
 BOOST_AUTO_TEST_CASE(FindClientNegativeTest) {
     ClientManager clientManager;
@@ -207,7 +206,7 @@ BOOST_AUTO_TEST_CASE(FindClientNegativeTest) {
 }
 
 /**
- * @test Test wyszukiwania wszystkich klientów spełniających podany predykat
+ * @test Test finding all clients satisfying the given predicate
  */
 BOOST_AUTO_TEST_CASE(FindAllClientsTest) {
     ClientManager clientManager;
@@ -222,7 +221,7 @@ BOOST_AUTO_TEST_CASE(FindAllClientsTest) {
 }
 
 /**
- * @test Test negatywny wyszukiwania wszystkich klientów spełniających podany predykat
+ * @test Negative test of finding all clients satisfying the given predicate
  */
 BOOST_AUTO_TEST_CASE(FindAllClientsNegativeTest) {
     ClientManager clientManager;
@@ -237,7 +236,7 @@ BOOST_AUTO_TEST_CASE(FindAllClientsNegativeTest) {
 }
 
 /**
- * @test Test usunięcia klienta
+ * @test Client removal test
  */
 BOOST_AUTO_TEST_CASE(UnregisterClientTest) {
     ClientManager clientManager;
@@ -252,8 +251,8 @@ BOOST_AUTO_TEST_CASE(UnregisterClientTest) {
 }
 
 /**
- * @test Sprawdza, czy unregisterClient nie robi nic jeśli klient o podanym
- *       numerze PESEL nie istnieje
+ * @test Checks if unregisterClient does nothing if a client with the given
+ *       PESEL number does not exist
  */
 BOOST_AUTO_TEST_CASE(UnregisterClientDoesNothingGivenNonexistentIDTest) {
     ClientManager clientManager;
@@ -270,7 +269,7 @@ BOOST_AUTO_TEST_CASE(UnregisterClientDoesNothingGivenNonexistentIDTest) {
 }
 
 /**
- * @test Sprawdza zapis, a następnie odczyt zapisanych obiektów z dysku
+ * @test Checks save and then read of saved objects from disk
  */
 BOOST_AUTO_TEST_CASE(ClientManSaveLoadTest) {
     std::string name = "Hartosz", lastName = "Borna", login = "urzytkownik",
@@ -293,8 +292,8 @@ BOOST_AUTO_TEST_CASE(ClientManSaveLoadTest) {
 }
 
 /**
- * @test Sprawdza, czy po usunięciu obiektu i zapisie, obiekt nie pojawia
- *       się przy odczycie
+ * @test Checks if after deleting an object and saving, the object does not appear
+ *       on read
  */
 BOOST_AUTO_TEST_CASE(ClientManDeleteLoadTest) {
     std::string name = "Hartosz", lastName = "Borna", login = "urzytkownik",

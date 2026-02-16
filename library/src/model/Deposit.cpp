@@ -28,8 +28,8 @@ Amount Deposit::endDeposit() {
 }
 
 std::string Deposit::toString() const {
-    return "Kwota: " + amount.toString()
-        + " Data rozpoczecia: " + gr::to_simple_string(beginTime);
+    return "Amount: " + amount.toString()
+        + " Start date: " + gr::to_simple_string(beginTime);
 }
 
 json Deposit::toJSON() const {

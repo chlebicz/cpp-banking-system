@@ -5,29 +5,29 @@
 using json = nlohmann::json;
 
 /**
- * Klasa abstrakcyjna, której obiekty da się utrwalić w formacie JSON,
- * używanym do zapisu do plików, i przedstawić w formie przyjaznej użytkownikowi.
+ * Abstract class whose objects can be persisted in JSON format,
+ * used for saving to files, and presented in a user-friendly form.
  */
 class Serializable {
 public:
     /**
-     * Konstruktor wirtualny
+     * Virtual constructor
      */
     virtual ~Serializable() = default;
 
     /**
-     * @returns Reprezentacja klasy w postaci obiektu JSON
+     * @returns Class representation as a JSON object
      */
     virtual json toJSON() const = 0;
 
     /**
-     * @returns Reprezentacja klasy w postaci ciągu znaków w formacie
-     *          przyjaznym do odczytu przez użytkownika
+     * @returns Class representation as a string in a format
+     *          friendly for reading by the user
      */
     virtual std::string toString() const = 0;
 };
 
-// Funkcje używane przez bibliotekę json do zapisu obiektów Serializable
-// w formacie JSON
+// Functions used by the json library to save Serializable objects
+// in JSON format
 void to_json(json& j, const Serializable& s);
 void to_json(json& j, const std::shared_ptr<Serializable>& s);

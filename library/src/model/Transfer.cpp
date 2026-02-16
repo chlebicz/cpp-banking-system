@@ -73,7 +73,7 @@ json Transfer::toJSON() const {
 }
 
 std::shared_ptr<Transfer> Transfer::fromJSON(const json& source) {
-    // obecnie ta metoda zakłada, że podany obiekt JSON ma poprawny format
+    // currently this method assumes that the given JSON object has a valid format
 
     return std::make_shared<Transfer>(
         source["id"],

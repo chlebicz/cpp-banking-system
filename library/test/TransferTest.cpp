@@ -1,13 +1,13 @@
 #include <boost/test/unit_test.hpp>
 #include "model/Transfer.h"
 
-// zeby boost mogl wypisac TransferType
+// so that boost can print TransferType
 std::ostream& operator<<(std::ostream& os, TransferType type);
 
 BOOST_AUTO_TEST_SUITE(TransferTest)
 
 /**
- * @test Sprawdza poprawność konstruktora przelewu
+ * @test Checks correctness of transfer constructor
  */
 BOOST_AUTO_TEST_CASE(TransferConstructorTest) {
     std::string transferID = "11100101";
@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE(TransferConstructorTest) {
 }
 
 /**
- * @test Sprawdza poprawne tworzenie obiektu przelewu z formatu JSON
+ * @test Checks correct creation of transfer object from JSON format
  */
 BOOST_AUTO_TEST_CASE(TransferFromJSONTest) {
     std::string transferID = "11100101";
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(TransferFromJSONTest) {
 }
 
 /**
- * @test Sprawdza tworzenie odpowiednich typów przelewu z formatu JSON
+ * @test Checks creation of appropriate transfer types from JSON format
  */
 BOOST_AUTO_TEST_CASE(TransferTypeFromJSONTest) {
     auto transferType = TransferType::Own;

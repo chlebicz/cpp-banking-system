@@ -5,144 +5,144 @@
 #include "Serializable.h"
 
 /**
- * Bład związany z niepoprawną kwotą - wyrzucany np. przy złym formacie kwoty
- * lub jeśli przy odejmowaniu wynik jest mniejszy od zera.
+ * Error related to an invalid amount - thrown e.g. when the amount format is wrong
+ * or if the result is less than zero during subtraction.
  */
 class InvalidAmountError : public std::logic_error {
 public:
     /**
-     * Konstruktor
-     * @param msg Wiadomość pozwalająca ocenić źródło błędu
+     * Constructor
+     * @param msg Message allowing to evaluate the source of the error
      */
     explicit InvalidAmountError(const std::string& msg);
 };
 
 /**
- * Klasa reprezentująca każdą kwotę obsługiwaną przez bank, przechowuje
- * dane w postaci całkowitej - część złotowa i groszowa kwoty
+ * Class representing every amount handled by the bank, stores
+ * data in integer form - zloty and grosz parts of the amount
  */
 class Amount : public Serializable {
 public:
     /**
-     * Konstruktor kwoty z części złotowej i groszowej
-     * @param zloty Część złotowa
-     * @param grosz Część groszowa (jeśli >= 100 to zostanie przeliczona
-     *              na odpowiednią ilość złotówek i groszy)
+     * Constructor of amount from zloty and grosz parts
+     * @param zloty Zloty part
+     * @param grosz Grosz part (if >= 100 it will be converted
+     *              to the appropriate amount of zlotys and groszs)
      */
     Amount(unsigned int zloty, unsigned int grosz);
 
     /**
-     * Konstruktor kwoty z postaci zmiennoprzecinkowej, tworzy kwotę
-     * przybliżając podaną liczbę do dwóch cyfr po przecinku w dół
-     * @param fromFloat Liczba zmiennoprzecinkowa reprezentująca kwotę
+     * Constructor of amount from floating point form, creates the amount
+     * by rounding down the given number to two decimal places
+     * @param fromFloat Floating point number representing the amount
      */
     Amount(float fromFloat);
 
     /**
-     * Metoda wytwórcza kwoty z podanego ciągu znaków.
-     * @param str Ciąg znaków reprezentujący kwotę w formacie "...(,..) (zł)"
-     * @throws InvalidAmountError Jeżeli kwota została podana w niepoprawnym
-     *                            formacie
+     * Factory method for amount from a given string.
+     * @param str String representing the amount in format "...(,..) (zl)"
+     * @throws InvalidAmountError If the amount was given in an invalid
+     *                            format
      */
     static Amount fromString(const std::string& str);
 
     /**
-     * Metoda wytwórcza kwoty z formatu JSON (string)
-     * @param j Obiekt JSON reprezentujący kwotę w formacie stringa
-     * @throws InvalidAmountError Z metody Amount::fromString
+     * Factory method for amount from JSON format (string)
+     * @param j JSON object representing the amount as a string
+     * @throws InvalidAmountError From Amount::fromString method
      */
     static Amount fromJSON(const json& j);
 
     json toJSON() const override;
 
     /**
-     * @returns Część złotowa kwoty
+     * @returns Zloty part of the amount
      */
     unsigned int getZloty() const;
 
     /**
-     * @returns Część groszowa kwoty
+     * @returns Grosz part of the amount
      */
     unsigned int getGrosz() const;
 
     /**
-     * @return Reprezentacja kwoty w postaci ciągu znaków - format "...,..zł"
+     * @return Representation of the amount as a string - format "...,..zl"
      */
     std::string toString() const;
 
     /**
-     * Mnożenie kwoty przez liczbę zmiennoprzecinkową (np. do obliczania
-     * danego procentu kwoty). Wynik może być niedokładny.
-     * @param right Mnożnik
-     * @returns Pomnożona kwota
+     * Multiplication of the amount by a floating point number (e.g. to calculate
+     * a given percentage of the amount). The result may be inaccurate.
+     * @param right Multiplier
+     * @returns Multiplied amount
      */
     Amount operator*(float right) const;
 
     /**
-     * Przeładowanie operatora dodawania dla kwot
-     * @param right Kwota po prawej stronie znaku "+"
-     * @return Suma kwoty na której ta metoda została wywołana i kwoty
-     *         podanej jako argument
+     * Overloading the addition operator for amounts
+     * @param right Amount on the right side of the "+" sign
+     * @return Sum of the amount on which this method was called and the amount
+     *         given as an argument
      */
     Amount operator+(const Amount& right) const;
 
     /**
-     * Przeladowanie operatora przypisania z dodawaniem dla kwot
-     * @param right Kwota po prawej stronie operatora "+="
+     * Overloading the assignment operator with addition for amounts
+     * @param right Amount on the right side of the "+=" operator
      */
     void operator+=(const Amount& right);
 
     /**
-     * Przeladowanie operatora przypisania z odejmowaniem dla kwot
-     * @param right Kwota po prawej stronie operatora "-="
-     * @throws InvalidAmountError Zgłasza wyjątek, kiedy odejmowana kwota jest
-     *                            większa od kwoty, na której wywołano operator.
+     * Overloading the assignment operator with subtraction for amounts
+     * @param right Amount on the right side of the "-=" operator
+     * @throws InvalidAmountError Throws an exception when the subtracted amount is
+     *                            greater than the amount on which the operator was called.
      */
     void operator-=(const Amount& right);
 
     /**
-     * Przeładowanie operatora odejmowania dla kwot
-     * @param right Kwota po prawej stronie operatora "-"
-     * @throws InvalidAmountError Zgłasza wyjątek jeśli kwota odejmowana jest
-     *                            większa niż kwota, na której wywołano operator.
-     * @returns Różnica kwoty na której ta metoda została wywołana i kwoty
-     *          podanej jako argument
+     * Overloading the subtraction operator for amounts
+     * @param right Amount on the right side of the "-" operator
+     * @throws InvalidAmountError Throws an exception if the subtracted amount is
+     *                            greater than the amount on which the operator was called.
+     * @returns Difference of the amount on which this method was called and the amount
+     *          given as an argument
      */
     Amount operator-(const Amount& right) const;
 
     /**
-     * @param right Kwota po prawej stronie operatora
-     * @return czy kwoty są równe
+     * @param right Amount on the right side of the operator
+     * @return whether amounts are equal
      */
     bool operator==(const Amount& right) const;
 
     /**
-     * @param right Kwota po prawej stronie operatora
-     * @return czy kwoty są różne
+     * @param right Amount on the right side of the operator
+     * @return whether amounts are different
      */
     bool operator!=(const Amount& right) const;
 
     /**
-     * @param right Kwota po prawej stronie operatora
-     * @return czy kwota po prawej jest większa od kwoty po lewej
+     * @param right Amount on the right side of the operator
+     * @return whether the amount on the right is greater than the amount on the left
      */
     bool operator<(const Amount& right) const;
 
     /**
-     * @param right Kwota po prawej stronie operatora
-     * @return czy kwota po lewej jest większa od kwoty po prawej
+     * @param right Amount on the right side of the operator
+     * @return whether the amount on the left is greater than the amount on the right
      */
     bool operator>(const Amount& right) const;
 
     /**
-     * @param right Kwota po prawej stronie operatora
-     * @return czy kwota po prawej jest większa lub równa kwocie po lewej
+     * @param right Amount on the right side of the operator
+     * @return whether the amount on the right is greater than or equal to the amount on the left
      */
     bool operator<=(const Amount& right) const;
 
     /**
-     * @param right Kwota po prawej stronie operatora
-     * @return czy kwota po lewej jest większa lub równa kwocie po prawej
+     * @param right Amount on the right side of the operator
+     * @return whether the amount on the left is greater than or equal to the amount on the right
      */
     bool operator>=(const Amount& right) const;
 private:
@@ -150,10 +150,10 @@ private:
 };
 
 /**
- * Umożliwia wypisanie kwoty na strumień
- * Wymagane do poprawnego kompilowania testów boost
- * @param os Strumień wyjściowy
- * @param amount Wypisywana kwota
- * @return Zmieniony strumień
+ * Allows printing the amount to a stream
+ * Required for proper compilation of boost tests
+ * @param os Output stream
+ * @param amount Amount being printed
+ * @return Changed stream
  */
 std::ostream& operator<<(std::ostream& os, const Amount& amount);

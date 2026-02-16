@@ -4,51 +4,50 @@
 class CryptoAccount : public Account {
 public:
     /**
-     * Konstruktor parametrowy
-     * @param accountNumber Numer rachunku
-     * @param id Identyfikator klienta posiadacza konta
+     * Parameterized constructor
+     * @param accountNumber Account number
+     * @param id Client ID of the account holder
      */
     CryptoAccount(const std::string &accountNumber, const std::string &id);
 
     /**
-     * Funkcja zwracająca właściwości obiektu jako string
-     * @return Zwraca informacje o koncie
+     * Function returning object properties as a string
+     * @return Returns information about the account
      */
     std::string toString() const override;
 
     /**
-     * @returns Wszystkie informacje o danym obiekcie w formacie JSON, które
-     *          są potrzebne do otworzenia jego stanu przy odczycie z pliku
+     * @returns All information about the object in JSON format, needed to restore its state when reading from a file
      */
     json toJSON() const override;
 
     /**
-     * @returns Typ konta
+     * @returns Account type
      */
     AccountType getType() const override;
 
     /**
-     * Funkcja zwracająca opłatę transferową
-     * @return Opłata transferowa
+     * Function returning the transfer fee
+     * @return Transfer fee
      */
     Amount getFee() override;
 
     /**
-     * Tworzy obiekt na bazie informacji w formacie JSON
-     * @param source Informacje o obiekcie w formacie JSON
-     * @returns Utworzony obiekt
+     * Creates an object based on information in JSON format
+     * @param source Information about the object in JSON format
+     * @returns Created object
      */
     static std::shared_ptr<Account> fromJSON(const json& source);
 
-    /// Destruktor
+    /// Destructor
     ~CryptoAccount() override = default;
 private:
-    /// Opłata transakcyjna
+    /// Transaction fee
     Amount transferFee = 100;
 
     /**
-     * Konstruktor z JSONa
-     * @param source Informacje o koncie w formacie JSON
+     * Constructor from JSON
+     * @param source Information about the account in JSON format
      */
     explicit CryptoAccount(const json& source);
 };

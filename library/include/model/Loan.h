@@ -6,17 +6,16 @@
 namespace gr = boost::gregorian;
 
 /**
- * Kredyt
+ * Loan
  */
 class Loan : public Serializable {
 public:
     /**
-     * Konstruktor parametrowy
-     * @param months Czas trwania kredytu
-     * @param amount Kwota kredytu
-     * @param beginTime Czas rozpoczęcia kredytu
-     * @param operationalAccount Konto na którym są obsługiwane
-     *                                 przelewy związane z kredytem
+     * Parameterized constructor
+     * @param months Loan duration
+     * @param amount Loan amount
+     * @param beginTime Loan start time
+     * @param operationalAccount Account on which transfers related to the loan are handled
      */
     Loan(
         int months, Amount amount, gr::date beginTime,
@@ -24,12 +23,11 @@ public:
     );
 
     /**
-     * Konstruktor parametrowy
-     * @param months Czas trwania kredytu
-     * @param amount Kwota kredytu
-     * @param beginTime Czas rozpoczęcia kredytu
-     * @param operationalAccountNumber Konto na którym są obsługiwane
-     *                                 przelewy związane z kredytem
+     * Parameterized constructor
+     * @param months Loan duration
+     * @param amount Loan amount
+     * @param beginTime Loan start time
+     * @param operationalAccountNumber Account on which transfers related to the loan are handled
      */
     Loan(
         int months, Amount amount, gr::date beginTime,
@@ -37,13 +35,12 @@ public:
     );
 
     /**
-     * Konstruktor parametrowy
-     * @param months Czas trwania kredytu
-     * @param amount Kwota kredytu
-     * @param beginTime Czas rozpoczęcia kredytu
-     * @param operationalAccountNumber Konto na którym są obsługiwane
-     *                                 przelewy związane z kredytem
-     * @param monthlyPayment Rata kredytu
+     * Parameterized constructor
+     * @param months Loan duration
+     * @param amount Loan amount
+     * @param beginTime Loan start time
+     * @param operationalAccountNumber Account on which transfers related to the loan are handled
+     * @param monthlyPayment Loan installment
      */
     Loan(
         int months, Amount amount, gr::date beginTime,
@@ -51,68 +48,67 @@ public:
     );
 
     /**
-     * Zaciąga kredyt
+     * Takes a loan
      */
     void create();
 
     /**
-     * Getter długości kredytu
-     * @return Zwraca ilość miesięcy na jakie został wzięty kredyt
+     * Loan length getter
+     * @return Returns the number of months for which the loan was taken
      */
     int getMonths() const;
 
     /**
-     * Getter kwoty kredytu
-     * @return Zwraca kwotę kredytu
+     * Loan amount getter
+     * @return Returns the loan amount
      */
     Amount getAmount() const;
 
     /**
-     * Getter miesięcznej opłaty za kredyt
-     * @return Zwraca kwotę miesięcznej opłaty za kredyt
+     * Monthly loan payment getter
+     * @return Returns the monthly loan payment amount
      */
     Amount getMontlyPayment() const;
 
     /**
-     * Getter pozostałych miesięcy
-     * @return Zwraca ilość miesięcy pozostałych do spłaty kredytu
+     * Remaining months getter
+     * @return Returns the number of months remaining to pay off the loan
      */
     int getRemainingMonths() const;
 
     /**
-     * Getter dnia rozpoczęcia kredytu
-     * @return Zwraca dzień rozpoczęcia kredytu
+     * Loan start date getter
+     * @return Returns the loan start date
      */
     gr::date getBeginTime() const;
 
     /**
-     * Getter konta operacyjnego
-     * @return Konto operacyjne
+     * Operational account getter
+     * @return Operational account
      */
     std::shared_ptr<Account> getOperationalAccount() const;
 
     /**
-     * Obciąża konto klienta ratą kredytu
-     * @returns Czy udało się obciążyć konto
+     * Charges the client's account with the loan installment
+     * @returns Whether charging the account succeeded
      */
     bool takeMoney();
 
     /**
-     * Funkcja zwracająca informacje o kredycie jako string
-     * @return Zwraca informacje o kredycie
+     * Function returning information about the loan as a string
+     * @return Returns information about the loan
      */
     std::string toString() const override;
 
     /**
-     * @returns Wszystkie informacje o danym obiekcie w formacie JSON, które
-     *          są potrzebne do otworzenia jego stanu przy odczycie z pliku
+     * @returns All information about the object in JSON format, needed to restore its state when reading from a file
      */
     json toJSON() const override;
 
     /**
-     * Tworzy obiekt z danych w formacie JSON
-     * @param source Informacje o obiekcie w formacie JSON
-     * @returns Obiekt złotych monet
+     * Creates an object from data in JSON format
+     * @param source Information about the object in JSON format
+     * @returns Gold coins object
      */
     static std::shared_ptr<Loan> fromJSON(const json& source);
 private:
@@ -123,6 +119,6 @@ private:
     std::string operationalAccountNumber;
     std::shared_ptr<Account> operationalAccount;
 
-    /// Dzień rozpoczęcia kredytu
+    /// Loan start date
     gr::date beginTime;
 };

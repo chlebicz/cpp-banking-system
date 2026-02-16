@@ -5,7 +5,7 @@
 BOOST_AUTO_TEST_SUITE(AmountTest)
 
 /**
- * @test Test konstruktora z dwóch intów
+ * @test Test constructor from two ints
  */
 BOOST_AUTO_TEST_CASE(AmountIntConstructorTest) {
     Amount amount{100, 63};
@@ -14,8 +14,8 @@ BOOST_AUTO_TEST_CASE(AmountIntConstructorTest) {
 }
 
 /**
- * @test Test konstruktora z dwóch intów, przy czym podana
- *       część groszowa jest większa niż 99
+ * @test Test constructor from two ints, where the given grosz part
+ *       is greater than 99
  */
 BOOST_AUTO_TEST_CASE(AmountIntConstructorOverflowTest) {
     Amount amount{100, 199};
@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(AmountIntConstructorOverflowTest) {
 }
 
 /**
- * @test Test konstruktora kwoty z liczby zmiennoprzecinkowej
+ * @test Test amount constructor from a float number
  */
 BOOST_AUTO_TEST_CASE(AmountFloatConstructorTest) {
     Amount amount{100.637};
@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(AmountFloatConstructorTest) {
 }
 
 /**
- * @test Test tworzenia kwoty z ciągu znaków
+ * @test Test creating amount from string
  */
 BOOST_AUTO_TEST_CASE(AmountFromStringTest) {
     auto amount1 = Amount::fromString("36");
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(AmountFromStringTest) {
 }
 
 /**
- * @test Test negatywny (wyrzucania wyjątków) z tworzenia kwoty z ciągu znaków
+ * @test Negative test (throwing exceptions) of creating amount from string
  */
 BOOST_AUTO_TEST_CASE(AmountFromStringExceptionTest) {
     BOOST_REQUIRE_THROW(Amount::fromString("100,999"), InvalidAmountError);
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE(AmountFromStringExceptionTest) {
 }
 
 /**
- * @test Test metody toString
+ * @test toString method test
  */
 BOOST_AUTO_TEST_CASE(AmountToStringTest) {
     Amount amount{2137, 42};
@@ -68,8 +68,8 @@ BOOST_AUTO_TEST_CASE(AmountToStringTest) {
 }
 
 /**
- * @test Sprawdza, czy jeśli część groszowa jest mniejsza niż 10 to są
- *       dodawane zera na początku w reprezentacji stringowej
+ * @test Checks if zeros are added at the beginning in string representation
+ *       if the grosz part is less than 10
  */
 BOOST_AUTO_TEST_CASE(AmountToStringAddsLeadingZeroTest) {
     Amount amount{2137, 2};
@@ -77,8 +77,8 @@ BOOST_AUTO_TEST_CASE(AmountToStringAddsLeadingZeroTest) {
 }
 
 /**
- * @test Sprawdza dodawanie dwóch kwot za pomocą przeładowania operatora
- *       W sprawdzanym przypadku suma części groszowych jest większa niż 99
+ * @test Checks adding two amounts using operator overloading
+ *       In the checked case, the sum of grosz parts is greater than 99
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorPlusTest) {
     Amount amount1{210, 73};
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorPlusTest) {
 }
 
 /**
- * @test Sprawdza mnożenie kwoty przez liczbę zmiennoprzecinkową
+ * @test Checks multiplying amount by a float number
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorTimesFloatTest) {
     Amount amount{100,00};
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorTimesFloatTest) {
 }
 
 /**
- * @test Sprawdza operator += dla kwoty
+ * @test Checks += operator for amount
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorPlusEqualsTest) {
     Amount amount1{210, 73};
@@ -113,9 +113,8 @@ BOOST_AUTO_TEST_CASE(AmountOperatorPlusEqualsTest) {
 }
 
 /**
- * @test Sprawdza operator -=dla kwoty, przy czym część groszowa
- *       odejmowanej kwoty jest większa niż część groszowa kwoty, od której
- *       odejmujemy
+ * @test Checks -= operator for amount, where the grosz part of the subtracted
+ *       amount is greater than the grosz part of the amount being subtracted from
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorMinusGreaterRightGroszTest) {
     Amount amount1{210, 43};
@@ -128,9 +127,8 @@ BOOST_AUTO_TEST_CASE(AmountOperatorMinusGreaterRightGroszTest) {
 }
 
 /**
- * @test Sprawdza operator - dla kwoty, przy czym część groszowa
- *       odejmowanej kwoty jest mniejsza niż część groszowa kwoty, od której
- *       odejmujemy
+ * @test Checks - operator for amount, where the grosz part of the subtracted
+ *       amount is less than the grosz part of the amount being subtracted from
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorMinusLessRightGroszTest) {
     Amount amount1{210, 73};
@@ -143,8 +141,8 @@ BOOST_AUTO_TEST_CASE(AmountOperatorMinusLessRightGroszTest) {
 }
 
 /**
- * @test Sprawdza, czy operator odejmowania wyrzuca wyjątek, jeśli odejmowana
- *       kwota jest większa od kwoty, od której odejmujemy
+ * @test Checks if subtraction operator throws an exception if the subtracted
+ *       amount is greater than the amount being subtracted from
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorMinusThrowsGivenRightGreaterTest) {
     Amount amount1{21, 37};
@@ -154,7 +152,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorMinusThrowsGivenRightGreaterTest) {
 }
 
 /**
- * @test Sprawdza operator -= dla kwoty
+ * @test Checks -= operator for amount
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorMinusEqualsTest) {
     Amount amount1{210, 43};
@@ -167,7 +165,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorMinusEqualsTest) {
 }
 
 /**
- * @test Sprawdza czy operator == zwraca prawdę jeśli kwoty są równe
+ * @test Checks if == operator returns true if amounts are equal
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorEqualsReturnsTrueGivenEqualTest) {
     Amount amount1{210, 43};
@@ -177,7 +175,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorEqualsReturnsTrueGivenEqualTest) {
 }
 
 /**
- * @test Sprawdza czy operator == zwraca fałsz jeśli kwoty są różne
+ * @test Checks if == operator returns false if amounts are different
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorEqualsReturnsFalseGivenDifferentTest) {
     Amount amount1{210, 43};
@@ -187,7 +185,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorEqualsReturnsFalseGivenDifferentTest) {
 }
 
 /**
- * @test Sprawdza czy operator != zwraca prawdę jeśli kwoty są różne
+ * @test Checks if != operator returns true if amounts are different
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorNotEqualsReturnsTrueGivenDifferentTest) {
     Amount amount1{210, 43};
@@ -197,7 +195,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorNotEqualsReturnsTrueGivenDifferentTest) {
 }
 
 /**
- * @test Sprawdza czy operator != zwraca fałsz jeśli kwoty są równe
+ * @test Checks if != operator returns false if amounts are equal
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorNotEqualsReturnsFalseGivenEqualTest) {
     Amount amount1{210, 43};
@@ -207,7 +205,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorNotEqualsReturnsFalseGivenEqualTest) {
 }
 
 /**
- * @test Sprawdza czy operator < zwraca prawdę jeśli kwota po prawej jest mniejsza
+ * @test Checks if < operator returns true if amount on the right is less
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsTrueGivenLessTest) {
     Amount amount1{100, 10};
@@ -217,9 +215,9 @@ BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsTrueGivenLessTest) {
 }
 
 /**
- * @test Sprawdza czy operator < zwraca prawdę jeśli kwota po prawej jest mniejsza,
- *       przy czym części złotówkowe obu kwot są równe, różnią się tylko
- *       częściami groszowymi
+ * @test Checks if < operator returns true if amount on the right is less,
+ *       while zloty parts of both amounts are equal, differing only by
+ *       grosz parts
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsTrueGivenLessGroszTest) {
     Amount amount1{210, 38};
@@ -229,7 +227,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsTrueGivenLessGroszTest) {
 }
 
 /**
- * @test Sprawdza czy operator < zwraca fałsz jeśli kwoty są równe
+ * @test Checks if < operator returns false if amounts are equal
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsFalseGivenEqualTest) {
     Amount amount1{210, 43};
@@ -239,7 +237,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsFalseGivenEqualTest) {
 }
 
 /**
- * @test Sprawdza czy operator < zwraca fałsz jeśli kwota po prawej jest większa
+ * @test Checks if < operator returns false if amount on the right is greater
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsFalseGivenGreaterTest) {
     Amount amount1{250, 78};
@@ -249,7 +247,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorLessReturnsFalseGivenGreaterTest) {
 }
 
 /**
- * @test Sprawdza czy operator > zwraca prawdę jeśli kwota po lewej jest większa
+ * @test Checks if > operator returns true if amount on the left is greater
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsTrueGivenGreaterTest) {
     Amount amount1{760, 53};
@@ -259,8 +257,8 @@ BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsTrueGivenGreaterTest) {
 }
 
 /**
- * @test Sprawdza czy operator > zwraca prawdę jeśli kwota po prawej jest większa,
- *       przy czym kwoty nie różnią się częścią złotową
+ * @test Checks if > operator returns true if amount on the right is greater,
+ *       while amounts do not differ by zloty part
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsTrueGivenGreaterGroszTest) {
     Amount amount1{210, 53};
@@ -270,7 +268,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsTrueGivenGreaterGroszTest) {
 }
 
 /**
- * @test Sprawdza czy operator > zwraca prawdę jeśli kwoty są równe
+ * @test Checks if > operator returns true if amounts are equal
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsFalseGivenEqualTest) {
     Amount amount1{210, 43};
@@ -280,7 +278,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsFalseGivenEqualTest) {
 }
 
 /**
- * @test Sprawdza czy operator > zwraca prawdę jeśli kwota po prawej jest większa
+ * @test Checks if > operator returns true if amount on the right is greater
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsFalseGivenLessTest) {
     Amount amount1{178, 78};
@@ -290,7 +288,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorGreaterReturnsFalseGivenLessTest) {
 }
 
 /**
- * @test Sprawdza czy operator >= zwraca prawdę jeśli kwota po lewej jest większa
+ * @test Checks if >= operator returns true if amount on the left is greater
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorGreaterEqualReturnsTrueGivenGreaterTest) {
     Amount amount1{760, 53};
@@ -300,7 +298,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorGreaterEqualReturnsTrueGivenGreaterTest) {
 }
 
 /**
- * @test Sprawdza czy operator >= zwraca prawdę jeśli kwoty są równe
+ * @test Checks if >= operator returns true if amounts are equal
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorGreaterEqualReturnsTrueGivenEqualTest) {
     Amount amount1{210, 43};
@@ -310,7 +308,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorGreaterEqualReturnsTrueGivenEqualTest) {
 }
 
 /**
- * @test Sprawdza czy operator >= zwraca fałsz jeśli kwota po prawej jest większa
+ * @test Checks if >= operator returns false if amount on the right is greater
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorGreaterEqualReturnsFalseGivenLessTest) {
     Amount amount1{210, 10};
@@ -320,7 +318,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorGreaterEqualReturnsFalseGivenLessTest) {
 }
 
 /**
- * @test Sprawdza czy operator <= zwraca prawdę jeśli kwota po lewej jest mniejsza
+ * @test Checks if <= operator returns true if amount on the left is less
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorLessEqualReturnsTrueGivenLessTest) {
     Amount amount1{200, 43};
@@ -330,7 +328,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorLessEqualReturnsTrueGivenLessTest) {
 }
 
 /**
- * @test Sprawdza czy operator <= zwraca prawdę jeśli kwota po prawej jest większa
+ * @test Checks if <= operator returns true if amount on the right is greater
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorLessEqualReturnsTrueGivenEqualTest) {
     Amount amount1{210, 43};
@@ -340,7 +338,7 @@ BOOST_AUTO_TEST_CASE(AmountOperatorLessEqualReturnsTrueGivenEqualTest) {
 }
 
 /**
- * @test Sprawdza czy operator <= zwraca fałsz jeśli kwota po lewej jest większa
+ * @test Checks if <= operator returns false if amount on the left is greater
  */
 BOOST_AUTO_TEST_CASE(AmountOperatorLessEqualReturnsFalseGivenGreaterTest) {
     Amount amount1{216, 43};

@@ -22,7 +22,7 @@ InvestmentAccount::InvestmentAccount(const json& source)
 
 void InvestmentAccount::buyGold(int count) {
     if (goldCoins)
-        throw GoldError{"Musisz najpierw sprzedac obecnie posiadane monety"};
+        throw GoldError{"You must first sell currently owned coins"};
 
     auto goldCoins = std::make_shared<GoldCoins>(count);
 
@@ -30,7 +30,7 @@ void InvestmentAccount::buyGold(int count) {
     try {
         newBalance -= goldCoins->calculateValue();
     } catch (const InvalidAmountError& e) {
-        throw NotEnoughMoney{"Nie masz wystarczajaco srodkow"};
+        throw NotEnoughMoney{"You do not have enough funds"};
     }
 
     setBalance(newBalance);
@@ -40,7 +40,7 @@ void InvestmentAccount::buyGold(int count) {
 
 Amount InvestmentAccount::sellGold() {
     if (!goldCoins)
-        throw GoldError{"Nie posiadasz zlotych monet na tym koncie"};
+        throw GoldError{"You do not have gold coins on this account"};
 
     auto value = goldCoins->calculateValue();
     
@@ -56,12 +56,12 @@ Amount InvestmentAccount::sellGold() {
 
 std::string InvestmentAccount::toString() const {
     std::ostringstream oss;
-    oss << "Konto Inwestycyjne " << Account::toString() << ". Zlote monety: ";
+    oss << "Investment Account " << Account::toString() << ". Gold coins: ";
 
     if (goldCoins)
         oss << goldCoins->toString();
     else
-        oss << "brak";
+        oss << "none";
 
     return oss.str();
 }

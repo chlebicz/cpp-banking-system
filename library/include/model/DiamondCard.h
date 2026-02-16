@@ -2,35 +2,34 @@
 #include "Card.h"
 
 /**
- * Karta Diamond
+ * Diamond Card
  */
 class DiamondCard : public Card {
 public:
     /**
-     * Konstruktor bezparametrowy
+     * Parameterless constructor
      */
     DiamondCard();
 
     /**
-     * Metoda obliczająca opłatę od transakcji kartą
-     * @param amount Kwota od której ma zostać obliczona prowizja
+     * Method calculating the fee for a card transaction
+     * @param amount Amount from which the commission is to be calculated
      */
     Amount calculateFee(const Amount &amount) const override;
 
     /**
-     * @returns Typ danej karty
+     * @returns Type of the given card
      */
     CardType getType() const override;
 
     /**
-     * @return Istotne informacje o danym obiekcie zapisane w formacie
-     *         przyjaznym użytkownikowi
+     * @return Significant information about the object saved in a user-friendly format
      */
     std::string toString() const override;
 
     /**
-     * Metoda zwracająca cenę karty
-     * @return Cena karty
+     * Method returning the price of the card
+     * @return Card price
      */
     Amount getPrice() const override;
 private:

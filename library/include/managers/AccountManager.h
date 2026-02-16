@@ -6,103 +6,103 @@
 #include "model/SavingsAccount.h"
 
 /**
- * Menedżer kont
+ * Account Manager
  */
 class AccountManager {
 public:
     /**
-     * Otwiera konto o danym typie dla klienta. Jeśli nie można
-     * już utworzyć konta danego typu dla klienta, to zwracany jest
-     * obiekt istniejącego już konta.
-     * @param clientID Klient - właściciel konta
-     * @param accountType Typ tworzonego konta
-     * @returns Obiekt utworzonego/istniejącego konta
+     * Opens an account of a given type for a client. If an account
+     * of the given type cannot be created for the client, an object
+     * of the existing account is returned.
+     * @param clientID Client - account owner
+     * @param accountType Type of account being created
+     * @returns Object of the created/existing account
      */
     std::shared_ptr<Account> openAccount(
         std::string clientID, AccountType accountType
     );
 
     /**
-     * Zamyka konto o podanym numerze rachunku.
-     * @param accountID Numer rachunku
-     * @returns Prawda, jeśli konto zostało zamknięte, w przeciwnym wypadku fałsz
+     * Closes the account with the given account number.
+     * @param accountID Account number
+     * @returns True if the account was closed, otherwise false
      */
     bool closeAccount(const std::string& accountID);
 
     /**
-     * @param accountID Numer rachunku
-     * @returns Konto o podanym numerze rachunku, nullptr jeśli nie istnieje.
+     * @param accountID Account number
+     * @returns Account with the given account number, nullptr if it does not exist.
      */
     std::shared_ptr<Account> getAccount(const std::string& accountID);
 
     /**
-     * Wyszukuje wszystkie konta klienta o podanym numerze PESEL
-     * @param clientID Numer PESEL
-     * @return Wektor z obiektami kont klienta
+     * Finds all accounts of the client with the given PESEL number
+     * @param clientID PESEL number
+     * @return Vector with client account objects
      */
     std::vector<std::shared_ptr<Account>> findClientAccounts(
         const std::string& clientID
     );
 
     /**
-     * Sprawdza czy konto o podanym numerze rachunku należy do klienta
-     * o podanym identyfikatorze
-     * @param clientID Identyfikator klienta
-     * @param accountID Numer rachunku
-     * @returns Prawda, jeśli konto należy do klienta, inaczej fałsz
+     * Checks if the account with the given account number belongs to the client
+     * with the given identifier
+     * @param clientID Client identifier
+     * @param accountID Account number
+     * @returns True if the account belongs to the client, otherwise false
      */
     bool isClientsAccount(
         const std::string& clientID, const std::string& accountID
     );
 
     /**
-     * Wyszukuje pierwsze konto spełniające podany predykat.
-     * @param predicate Predykat
-     * @returns Znalezione konto
+     * Finds the first account satisfying the given predicate.
+     * @param predicate Predicate
+     * @returns Found account
      */
     std::shared_ptr<Account> findAccount(
         const Predicate<std::shared_ptr<Account>>& predicate
     );
 
     /**
-     * Wyszukuje wszystkie konta spełniające dany predykat.
-     * @param predicate Predykat
-     * @returns Wektor z obiektami znalezionych kont
+     * Finds all accounts satisfying the given predicate.
+     * @param predicate Predicate
+     * @returns Vector with objects of found accounts
      */
     std::vector<std::shared_ptr<Account>> findAllAccounts(
         const Predicate<std::shared_ptr<Account>>& predicate
     );
 
     /**
-     * Wyszukuje konta inwestycyjne należące do podanego klienta
-     * @param ownerID Identyfikator klienta właściciela kont
-     * @returns Wektor z obiektami kont inwestycyjnych
+     * Finds investment accounts belonging to the given client
+     * @param ownerID Client identifier of the account owner
+     * @returns Vector with investment account objects
      */
     std::vector<std::shared_ptr<InvestmentAccount>> findInvestmentAccounts(
         const std::string& ownerID
     );
 
     /**
-     * Wyszukuje konta inwestycyjne należące do podanego klienta
-     * @param ownerID Identyfikator klienta właściciela kont
-     * @returns Wektor z obiektami kont inwestycyjnych
+     * Finds savings accounts belonging to the given client
+     * @param ownerID Client identifier of the account owner
+     * @returns Vector with savings account objects
      */
     std::vector<std::shared_ptr<SavingsAccount>> findSavingsAccounts(
         const std::string& ownerID
     );
 
     /**
-     * @returns Wszystkie konta w repozytorium
+     * @returns All accounts in the repository
      */
     const std::vector<std::shared_ptr<Account>>& getAllAccounts();
 
     /**
-     * Zapisuje obiekty kont z repozytorium do plików.
+     * Saves account objects from the repository to files.
      */
     void save();
 
     /**
-     * Ładuje obiekty kont z plików do repozytorium.
+     * Loads account objects from files to the repository.
      */
     void load();
 private:

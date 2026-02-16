@@ -19,7 +19,7 @@ std::shared_ptr<Transfer> TransferManager::createTransfer(
 
     auto sender = accountManager.getAccount(senderID);
     if (!sender)
-        throw InvalidTransferError{"Niepoprawny wysylca"};
+        throw InvalidTransferError{"Invalid sender"};
 
     TransferType type;
     if (accountManager.isClientsAccount(sender->getOwnerID(), recipientID))
@@ -38,7 +38,7 @@ std::shared_ptr<Transfer> TransferManager::createTransfer(
     try {
         newSenderBalance -= transfer->getSentAmount();
     } catch (const InvalidAmountError& e) {
-        throw NotEnoughMoney{"Nie ma majatku - sa wyjatki"};
+        throw NotEnoughMoney{"No assets - there are exceptions"};
     }
 
     sender->setBalance(newSenderBalance);
@@ -130,8 +130,8 @@ void TransferManager::load() {
 }
 
 void TransferManager::save() {
-    // Najpierw usuwamy wszystkie pliki (aby pliki usuniętych podczas
-    // działania programu obiektów zostały usunięte)
+    // First remove all files (so that files of objects deleted during
+    // the program execution are removed)
     storageHandler.removeAll();
 
     for (const auto& transfer : repository.getAll())
@@ -146,11 +146,11 @@ void TransferManager::handleIncomingExternalTransfers() {
         auto transfer = Transfer::fromJSON(data);
         repository.add(transfer);
 
-        // dodaj pieniążki odbiorcy
+        // add money to recipient
         auto recipient = accountManager.getAccount(transfer->getRecipientID());
         recipient->setBalance(recipient->getBalance() + transfer->getAmount());
 
-        // przelew zewnętrzny obsłużony, wyrzuć z bazy zewnętrznej
+        // external transfer handled, remove from external database
         ieTransferStorage.removeObject(id);
     }
 }

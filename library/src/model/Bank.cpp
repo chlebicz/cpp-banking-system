@@ -29,7 +29,7 @@ void Bank::decreaseBalance(Amount by) {
     try {
         balance -= by;
     } catch(const InvalidAmountError&) {
-        throw Bankruptcy{"Bank oglosil bankructwo. Do widzenia."};
+        throw Bankruptcy{"Bank declared bankruptcy. Goodbye."};
     }
 }
 
@@ -70,9 +70,9 @@ void Bank::takeLoan(
 ) {
     std::shared_ptr<Account> account = accountManager.getAccount(number);
     if (!account)
-        throw InvalidAccountError{"Nie istnieje takie konto!"};
+        throw InvalidAccountError{"Such account does not exist!"};
     if (!accountManager.isClientsAccount(clientID, account->getId()))
-        throw InvalidAccountError{"To konto nie nalezy do ciebie!"};
+        throw InvalidAccountError{"This account does not belong to you!"};
 
     std::shared_ptr<Client> client = clientManager.getClient(clientID);
     client->takeLoan(months, amount, account);

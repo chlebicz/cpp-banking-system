@@ -6,21 +6,21 @@
 #include "Serializable.h"
 
 /**
- * Predykat dla danego typu
+ * Predicate for a given type
  */
 template<typename T>
 using Predicate = std::function<bool (const T&)>;
 
 /**
- * Repozytorium - składowanie danych w pamięci
- * @tparam T Typ zarządzany przez repozytorium
+ * Repository - storing data in memory
+ * @tparam T Type managed by the repository
  */
 template<typename T>
 class Repository {
 public:
     /**
-    * @param id Identyfikator elementu w repozytorium
-    * @returns wskaznik do elementu
+    * @param id Identifier of the element in the repository
+    * @returns pointer to the element
     */
     T get(int id) {
         if (id >= collection.size())
@@ -29,8 +29,8 @@ public:
     }
 
     /**
-    * Dodaje element do repozytorium
-    * @param element wskaznik do elementu do dodania
+    * Adds an element to the repository
+    * @param element pointer to the element to add
     */
     void add(T element) {
         if (!element)
@@ -39,8 +39,8 @@ public:
     }
 
     /**
-    * Usuwa element z repozytorium
-    * @param element wskaznik do elementu do usuniecia
+    * Removes an element from the repository
+    * @param element pointer to the element to remove
     */
     void remove(const T& element) {
         if (!element)
@@ -50,23 +50,23 @@ public:
     }
 
     /**
-    * Istotne informacje o repozytorium.
+    * Significant information about the repository.
     */
     std::string report() const {
-        return std::to_string(size()) + " obiektow";
+        return std::to_string(size()) + " objects";
     }
 
     /**
-    * Liczba wpisow w repozytorium
+    * Number of entries in the repository
     */
     size_t size() const {
         return collection.size();
     }
 
     /**
-     * Znajduje pierwszy element spełniający predykat
-     * @param predicate predykat
-     * @returns element repozytorium
+     * Finds the first element satisfying the predicate
+     * @param predicate predicate
+     * @returns repository element
      */
     T findFirst(const Predicate<T>& predicate) {
         auto it = std::find_if(collection.begin(), collection.end(), predicate);
@@ -76,9 +76,9 @@ public:
     }
 
     /**
-    * Znajduje element w repozytorium na podstawie predykatu
-    * @param predicate predykat
-    * @returns wektor elementow z repozytorium, ktore spelniaja predykat
+    * Finds an element in the repository based on the predicate
+    * @param predicate predicate
+    * @returns vector of elements from the repository that satisfy the predicate
     */
     std::vector<T> findAll(const Predicate<T>& predicate) {
         std::vector<T> result;
@@ -87,14 +87,14 @@ public:
     }
 
     /**
-     * @returns Wszystkie obiekty w repozytorium
+     * @returns All objects in the repository
      */
     const std::vector<T>& getAll() {
         return collection;
     }
 
     /**
-     * Usuwa wszystkie obiekty z repozytorium
+     * Removes all objects from the repository
      */
     void removeAll() {
         collection.clear();

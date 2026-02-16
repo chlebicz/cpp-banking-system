@@ -103,10 +103,10 @@ bool Loan::takeMoney() {
 }
 
 std::string Loan::toString() const {
-    return "Kredyt wziety na: " + amount.toString() + ", na "
-        + std::to_string(months) + "m-c, miesieczna oplata: "
-        + monthlyPayment.toString() + ", oplacone miesiace: "
-        + std::to_string(paidMonths) + " miesiace pozostale do splaty: "
+    return "Loan taken for: " + amount.toString() + ", for "
+        + std::to_string(months) + " months, monthly payment: "
+        + monthlyPayment.toString() + ", paid months: "
+        + std::to_string(paidMonths) + " months remaining to pay: "
         + std::to_string(getRemainingMonths());
 }
 
@@ -142,4 +142,3 @@ std::shared_ptr<Loan> Loan::fromJSON(const json& source) {
         Amount::fromJSON(source["monthlyPayment"])
     );
 }
-

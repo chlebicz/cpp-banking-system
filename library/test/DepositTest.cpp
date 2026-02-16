@@ -9,7 +9,7 @@ namespace gr = boost::gregorian;
 BOOST_AUTO_TEST_SUITE(DepositTest)
 
 /**
- * @test Sprawdza konstruktor lokaty
+ * @test Checks deposit constructor
  */
 BOOST_AUTO_TEST_CASE(DepositConstructorTest) {
     Amount bank = Bank::getInstance().getBalance();

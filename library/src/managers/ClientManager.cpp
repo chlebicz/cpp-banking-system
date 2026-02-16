@@ -13,14 +13,14 @@ std::shared_ptr<Client> ClientManager::registerClient(
     auto client = getClient(personalID);
     if (client)
         throw RegisterFailedError{
-            "Klient o podanym numerze PESEL jest juz zarejestrowany"
+            "Client with the given PESEL number is already registered"
         };
 
     auto sameLogin = findClient([&login] (const auto& c) {
         return c->getLogin() == login;
     });
     if (sameLogin)
-        throw RegisterFailedError{"Klient o podanym loginie juz istnieje"};
+        throw RegisterFailedError{"Client with the given login already exists"};
 
     client = std::make_shared<Client>(
         std::move(firstName), std::move(lastName), std::move(personalID),
@@ -49,11 +49,11 @@ std::shared_ptr<Client> ClientManager::login(
     );
 
     if (!client)
-        throw LoginFailedError("Niepoprawna nazwa uzytkownika");
+        throw LoginFailedError("Invalid username");
 
     if (client->isAccountLocked())
         throw LoginFailedError(
-            "Twoje konto jest zablokowane. Nie udalo sie zalogowac"
+            "Your account is locked. Login failed"
         );
 
     if (client->isPasswordCorrect(password)) {
@@ -64,13 +64,13 @@ std::shared_ptr<Client> ClientManager::login(
     client->increaseIncorrectLogins();
     if (client->isAccountLocked())
         throw LoginFailedError(
-            "Wprowadzono niepoprawne haslo. Konto zostalo zablokowane"
+            "Invalid password entered. Account has been locked"
         );
 
     auto count = std::to_string(client->getIncorrectLogins());
     throw LoginFailedError(
-        "Wprowadzono niepoprawne haslo " + count + " raz(y) z rzedu. Po 5 "
-        + "nieudanych probach logowania konto zostanie zablokowane."
+        "Invalid password entered " + count + " times in a row. After 5 "
+        + "failed login attempts the account will be locked."
     );
 }
 
@@ -98,8 +98,8 @@ bool ClientManager::unregisterClient(const std::string& personalID) {
 }
 
 void ClientManager::save() {
-    // Najpierw usuwamy wszystkie pliki (aby pliki usuniętych podczas
-    // działania programu obiektów zostały usunięte)
+    // First remove all files (so that files of objects deleted during
+    // the program execution are removed)
     storageHandler.removeAll();
 
     for (const auto& client : repository.getAll())

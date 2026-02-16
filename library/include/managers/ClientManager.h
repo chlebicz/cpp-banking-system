@@ -4,44 +4,44 @@
 #include "model/Client.h"
 
 /**
- * Wyjątek wyrzucany, kiedy logowanie się nie powiedzie
+ * Exception thrown when login fails
  */
 class LoginFailedError : public std::runtime_error {
 public:
     /**
-     * Konstruktor
-     * @param msg Wiadomość pozwalająca ocenić źródło błędu
+     * Constructor
+     * @param msg Message allowing to evaluate the source of the error
      */
     explicit LoginFailedError(const std::string& msg);
 };
 
 /**
- * Wyjątek wyrzucany, kiedy rejestracja klienta się nie powiedzie
+ * Exception thrown when client registration fails
  */
 class RegisterFailedError : public std::runtime_error {
 public:
     /**
-     * Konstruktor
-     * @param msg Wiadomość pozwalająca ocenić źródło błędu
+     * Constructor
+     * @param msg Message allowing to evaluate the source of the error
      */
     explicit RegisterFailedError(const std::string& msg);
 };
 
 /**
- * Menedżer klientów
+ * Client Manager
  */
 class ClientManager {
 public:
     /**
-     * Tworzy obiekt klienta o podanych danych. Jeśli taki klient
-     * (o podanym numerze PESEL) istnieje, to zwracany jest obiekt
-     * istniejącego już klienta.
-     * @param firstName Imię klienta
-     * @param lastName Nazwisko klienta
-     * @param personalID Numer PESEL klienta
-     * @param login Login klienta
-     * @param password Hasło klienta
-     * @return Utworzony/istniejący obiekt klienta
+     * Creates a client object with the given data. If such a client
+     * (with the given PESEL number) exists, an object of the
+     * existing client is returned.
+     * @param firstName Client's first name
+     * @param lastName Client's last name
+     * @param personalID Client's PESEL number
+     * @param login Client's login
+     * @param password Client's password
+     * @return Created/existing client object
      */
     std::shared_ptr<Client> registerClient(
         std::string firstName, std::string lastName, std::string personalID,
@@ -49,56 +49,56 @@ public:
     );
 
     /**
-     * @param personalID Numer PESEL
-     * @returns Obiekt klienta o podanym numerze PESEL lub nullptr jeśli nie istnieje.
+     * @param personalID PESEL number
+     * @returns Client object with the given PESEL number or nullptr if it does not exist.
      */
     std::shared_ptr<Client> getClient(const std::string& personalID);
 
     /**
-     * Wyszukuje klienta o podanym loginie i próbuje się zalogować.
-     * @param login Login klienta
-     * @param password Hasło klienta
-     * @returns Obiekt klienta, jeśli logowanie się powiodło
-     * @throws LoginFailedError Kiedy klient o podanym loginie nie istnieje lub
-     *                          wprowadzone hasło jest niepoprawne
+     * Finds a client with the given login and attempts to log in.
+     * @param login Client's login
+     * @param password Client's password
+     * @returns Client object if login was successful
+     * @throws LoginFailedError When a client with the given login does not exist or
+     *                          the entered password is incorrect
      */
     std::shared_ptr<Client> login(const std::string& login, const std::string& password);
 
     /**
-     * Wyszukuje klienta spełniającego dany predykat.
-     * @param predicate Predykat
-     * @returns Znaleziony klient
+     * Finds a client satisfying the given predicate.
+     * @param predicate Predicate
+     * @returns Found client
      */
     std::shared_ptr<Client> findClient(const Predicate<std::shared_ptr<Client>>& predicate);
 
     /**
-     * Wyszukuje wszystkich klientów spełniających podany predykat.
-     * @param predicate Predykat
-     * @returns Wektor z obiektami znalezionych klientów
+     * Finds all clients satisfying the given predicate.
+     * @param predicate Predicate
+     * @returns Vector with objects of found clients
      */
     std::vector<std::shared_ptr<Client>> findAllClients(
         const Predicate<std::shared_ptr<Client>>& predicate
     );
 
     /**
-     * @returns Wszystkie obiekty klientów
+     * @returns All client objects
      */
     const std::vector<std::shared_ptr<Client>>& getAllClients();
 
     /**
-     * Usuwa danego klienta
-     * @param personalID Numer PESEL
-     * @returns Prawda, jeśli klient został usunięty, fałsz w przeciwnym wypadku
+     * Removes a given client
+     * @param personalID PESEL number
+     * @returns True if the client was removed, false otherwise
      */
     bool unregisterClient(const std::string& personalID);
 
     /**
-     * Zapisuje obiekty klientów z repozytorium do plików.
+     * Saves client objects from the repository to files.
      */
     void save();
 
     /**
-     * Ładuje obiekty klientów z plików do repozytorium.
+     * Loads client objects from files to the repository.
      */
     void load();
 private:

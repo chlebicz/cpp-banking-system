@@ -11,7 +11,7 @@ std::ostream& operator<<(std::ostream& os, AccountType type) {
 BOOST_AUTO_TEST_SUITE(AccountManagerTest)
 
 /**
- * @test Otwieranie konta za pomocą menadżera kont
+ * @test Opening an account using account manager
  */
 BOOST_AUTO_TEST_CASE(OpenAccountTest) {
     AccountManager accountManager;
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(OpenAccountTest) {
 }
 
 /**
- * @test Zamykanie konta
+ * @test Closing an account
  */
 BOOST_AUTO_TEST_CASE(CloseAccountTest) {
     AccountManager accountManager;
@@ -41,11 +41,11 @@ BOOST_AUTO_TEST_CASE(CloseAccountTest) {
 }
 
 /**
- * @test Znajdywanie kont należących do klienta
+ * @test Finding accounts belonging to a client
  */
 BOOST_AUTO_TEST_CASE(FindClientAccountsTest) {
     AccountManager accountManager;
-    
+
     auto account1 = accountManager.openAccount("123", AccountType::Main);
     auto account2 = accountManager.openAccount("123", AccountType::Investment);
 
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(FindClientAccountsTest) {
 }
 
 /**
- * @test Zapis, a następnie odczyt zapisanych obiektów kont z dysku
+ * @test Save and then load saved account objects from disk
  */
 BOOST_AUTO_TEST_CASE(AccountManagerSaveLoadTest) {
     const std::string ownerID = "123";
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(AccountManagerSaveLoadTest) {
 }
 
 /**
- * @test Sprawdza, czy po usunięciu konta i załadowaniu z dysku konto jest usunięte
+ * @test Checks if after deleting an account and loading from disk the account is deleted
  */
 BOOST_AUTO_TEST_CASE(AccountManagerDeleteLoadTest) {
     std::string id;

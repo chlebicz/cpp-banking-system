@@ -14,7 +14,7 @@ CardType StandardCard::getType() const {
 }
 
 std::string StandardCard::toString() const {
-    return "Karta Standard - przy kazdej platnosci oplata dodatkowa 5% kwoty";
+    return "Standard Card - additional fee of 5% of amount for each payment";
 }
 
 Amount StandardCard::getPrice() const {

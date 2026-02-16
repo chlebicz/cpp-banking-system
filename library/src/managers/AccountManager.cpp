@@ -102,8 +102,8 @@ const std::vector<std::shared_ptr<Account>>& AccountManager::getAllAccounts() {
 }
 
 void AccountManager::save() {
-    // Najpierw usuwamy wszystkie pliki (aby pliki usuniętych podczas
-    // działania programu obiektów zostały usunięte)
+    // First remove all files (so that files of objects deleted during
+    // the program execution are removed)
     storageHandler.removeAll();
 
     for (const auto& account : repository.getAll())

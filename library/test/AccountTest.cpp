@@ -22,7 +22,7 @@ public:
 };
 
 /**
- * @test Test konstruktora konta
+ * @test Account constructor test
  */
 BOOST_AUTO_TEST_CASE(AccountConstructorTest) {
     std::shared_ptr<Account> account = std::make_shared<TestAccount>("5", "55");
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(AccountConstructorTest) {
 }
 
 /**
- * @test Test metody setBalance
+ * @test setBalance method test
  */
 BOOST_AUTO_TEST_CASE(AccountSetBalanceTest) {
     std::shared_ptr<Account> account = std::make_shared<TestAccount>("5", "55");
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(AccountSetBalanceTest) {
 }
 
 /**
- * @test Test dodawania karty
+ * @test Card adding test
  */
 BOOST_AUTO_TEST_CASE(AccountAddCardTest) {
     std::shared_ptr<Account> account = std::make_shared<TestAccount>("5", "55");
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(AccountAddCardTest) {
 }
 
 /**
- * @test Test usuwania karty
+ * @test Card removing test
  */
 BOOST_AUTO_TEST_CASE(AccountRemoveCardTest) {
     std::shared_ptr<Account> account = std::make_shared<TestAccount>("5", "55");
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(AccountRemoveCardTest) {
 }
 
 /**
- * @test Test transakcji za pomocą karty
+ * @test Card transaction test
  */
 BOOST_AUTO_TEST_CASE(AccountTransactionTest) {
     std::shared_ptr<Account> senderAccount = std::make_shared<TestAccount>("5", "55");
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE(AccountTransactionTest) {
 }
 
 /**
- * @test Test zakupu i sprzedaży złota za pomocą konta inwestycyjengo
+ * @test Gold purchase and sale test using an investment account
  */
 BOOST_AUTO_TEST_CASE(InvestmentAccountGoldTest) {
     std::shared_ptr<InvestmentAccount> account = std::make_shared<InvestmentAccount>("5", "55");
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(InvestmentAccountGoldTest) {
 }
 
 /**
- * @test Test zakładania lokaty na koncie oszczędnościowym
+ * @test Opening a deposit on a savings account test
  */
 BOOST_AUTO_TEST_CASE(SavingsAccountCreateDepositTest) {
     std::shared_ptr<SavingsAccount> account = std::make_shared<SavingsAccount>("5", "55");
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(SavingsAccountCreateDepositTest) {
 }
 
 /**
- * @test Test usuwania lokaty z konta oszczędnościowego
+ * @test Closing a deposit on a savings account test
  */
 BOOST_AUTO_TEST_CASE(SavingsAccountDeleteDepositTest) {
     std::shared_ptr<SavingsAccount> account = std::make_shared<SavingsAccount>("5", "55");
